@@ -29,9 +29,9 @@ export function SiteHeader() {
         <div className="container masthead">
           <Brand />
           <div className="masthead-note">
-            From coast to coast.
+            Canada’s voice for
             <br />
-            <strong>Always connected.</strong>
+            <strong>secure technology.</strong>
           </div>
           <div className="header-actions">
             <button
