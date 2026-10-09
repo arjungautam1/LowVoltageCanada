@@ -133,7 +133,7 @@ export function SiteHeader() {
             {topics.map((topic) => (
               <Link
                 key={topic.slug}
-                href={`/stories?topic=${topic.slug}`}
+                href={`/topics/${topic.slug}`}
                 onClick={() => searchDialog.current?.close()}
               >
                 {topic.name} <ArrowUpRight size={13} />

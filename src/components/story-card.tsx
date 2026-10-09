@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import type { Article } from "@/lib/types";
+import { topics, type Article } from "@/lib/types";
 
 export function StoryCard({
   article,
@@ -12,10 +12,11 @@ export function StoryCard({
   compact?: boolean;
   eager?: boolean;
 }) {
+  const topic = topics.find((item) => item.name === article.topic);
   return (
     <article className={`story-card ${compact ? "story-card-compact" : ""}`}>
       <Link
-        href={`/stories/${article.slug}`}
+        href={`/stories/${encodeURIComponent(article.slug)}`}
         className="story-image-link"
         aria-label={article.title}
       >
@@ -38,10 +39,18 @@ export function StoryCard({
           >
             {article.kind}
           </Link>
-          <span>{article.topic}</span>
+          <span>
+            {topic ? (
+              <Link href={`/topics/${topic.slug}`}>{article.topic}</Link>
+            ) : (
+              article.topic
+            )}
+          </span>
         </div>
         <h3>
-          <Link href={`/stories/${article.slug}`}>{article.title}</Link>
+          <Link href={`/stories/${encodeURIComponent(article.slug)}`}>
+            {article.title}
+          </Link>
         </h3>
         {!compact && <p>{article.excerpt}</p>}
         <div className="story-byline">

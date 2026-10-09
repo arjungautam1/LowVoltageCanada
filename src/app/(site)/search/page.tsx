@@ -1,12 +1,15 @@
-import type { Metadata } from "next";
 import { Search } from "lucide-react";
 import { getArticles } from "@/sanity/lib/queries";
 import { StoryCard } from "@/components/story-card";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildMetadata({
   title: "Search",
-  robots: { index: false, follow: true },
-};
+  description:
+    "Search Low Voltage Canada's industry stories, products, people and companies.",
+  path: "/search",
+  noIndex: true,
+});
 
 export default async function SearchPage({
   searchParams,

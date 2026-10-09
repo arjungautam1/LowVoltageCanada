@@ -20,7 +20,7 @@ export function SiteFooter() {
             <div>
               <span className="eyebrow">THE COVERAGE</span>
               {topics.map((topic) => (
-                <Link key={topic.slug} href={`/stories?topic=${topic.slug}`}>
+                <Link key={topic.slug} href={`/topics/${topic.slug}`}>
                   {topic.name}
                 </Link>
               ))}
@@ -33,6 +33,7 @@ export function SiteFooter() {
                 All stories <ArrowUpRight size={13} />
               </Link>
               <Link href="/about#contact">Connect with us</Link>
+              <a href="/feed.xml">RSS feed</a>
             </div>
           </div>
         </div>

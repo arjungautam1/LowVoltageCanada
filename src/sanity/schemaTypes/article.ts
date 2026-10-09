@@ -9,6 +9,7 @@ export const article = defineType({
     { name: "story", title: "Story", default: true },
     { name: "publishing", title: "Publishing" },
     { name: "relationships", title: "Related coverage" },
+    { name: "seo", title: "Search & sharing" },
   ],
   fields: [
     defineField({
@@ -87,6 +88,29 @@ export const article = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "updatedAt",
+      title: "Editorial update date",
+      type: "datetime",
+      group: "publishing",
+      description:
+        "Optional. Set this when the reporting changes significantly; minor formatting edits do not need a new date.",
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const publishedAt = context.document?.publishedAt;
+          if (
+            value &&
+            typeof publishedAt === "string" &&
+            new Date(value).getTime() < new Date(publishedAt).getTime()
+          ) {
+            return "The update date must be on or after the publication date.";
+          }
+          if (value && new Date(value).getTime() > Date.now()) {
+            return "Use the actual editorial update time, rather than a future date.";
+          }
+          return true;
+        }),
+    }),
+    defineField({
       name: "readTime",
       title: "Reading time (minutes)",
       type: "number",
@@ -153,6 +177,58 @@ export const article = defineType({
           },
         }),
       ],
+    }),
+    defineField({
+      name: "seoTitle",
+      title: "Search title",
+      type: "string",
+      group: "seo",
+      description:
+        "Optional. The headline is used by default. Describe the story clearly; avoid repeated keywords.",
+      validation: (rule) =>
+        rule
+          .max(70)
+          .warning("A concise title is easier to scan in search results."),
+    }),
+    defineField({
+      name: "seoDescription",
+      title: "Search description",
+      type: "text",
+      rows: 3,
+      group: "seo",
+      description:
+        "Optional. The standfirst is used by default. Give readers an accurate reason to read the story.",
+      validation: (rule) =>
+        rule
+          .max(180)
+          .warning("A short, specific description is easier to scan."),
+    }),
+    defineField({
+      name: "socialImage",
+      title: "Sharing image",
+      type: "image",
+      group: "seo",
+      options: { hotspot: true },
+      description:
+        "Optional. The lead image is used by default. A landscape image with a 1200 × 630 crop works well for sharing.",
+      fields: [
+        defineField({
+          name: "alt",
+          title: "Alternative text",
+          type: "string",
+          description:
+            "Briefly describe the image; the headline is used if left blank.",
+        }),
+      ],
+    }),
+    defineField({
+      name: "noIndex",
+      title: "Hide from search engines",
+      type: "boolean",
+      group: "seo",
+      initialValue: false,
+      description:
+        "The published story remains accessible on the website, but search engines are asked not to index it and it is omitted from sitemaps.",
     }),
     defineField({
       name: "organizations",

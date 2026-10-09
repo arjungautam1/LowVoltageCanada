@@ -13,6 +13,14 @@ import { StoryCard } from "@/components/story-card";
 import { SectionHeading } from "@/components/section-heading";
 import { MapleMark } from "@/components/brand";
 import { topics } from "@/lib/types";
+import { absoluteUrl, buildMetadata, siteConfig } from "@/lib/seo";
+import { StructuredData } from "@/components/structured-data";
+
+export const metadata = buildMetadata({
+  title: "Canadian Low-Voltage Industry News",
+  description: siteConfig.description,
+  path: "/",
+});
 
 export default async function HomePage() {
   const articles = await getArticles();
@@ -26,6 +34,32 @@ export default async function HomePage() {
   const topicIcons = [AudioLines, ShieldCheck, Radio, CircuitBoard];
   return (
     <main id="main" className="home-main">
+      <StructuredData
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "NewsMediaOrganization",
+              "@id": absoluteUrl("/#publisher"),
+              name: siteConfig.name,
+              alternateName: "LVC",
+              url: absoluteUrl("/"),
+              description: siteConfig.description,
+              areaServed: { "@type": "Country", name: "Canada" },
+              publishingPrinciples: absoluteUrl("/about#editorial"),
+            },
+            {
+              "@type": "WebSite",
+              "@id": absoluteUrl("/#website"),
+              name: siteConfig.name,
+              alternateName: "LVC",
+              url: absoluteUrl("/"),
+              inLanguage: "en-CA",
+              publisher: { "@id": absoluteUrl("/#publisher") },
+            },
+          ],
+        }}
+      />
       <div className="container">
         <div className="edition-row">
           <span>
@@ -42,13 +76,16 @@ export default async function HomePage() {
             Canada, <span>connected.</span>
           </h1>
           <p>
-            The ideas, innovations, and people
-            <br className="desktop-break" /> moving our industry forward.
+            Canadian news and perspectives on AV, security, networking, and
+            smart buildings.
           </p>
         </div>
         {lead ? (
           <section className="lead-grid" aria-label="Top stories">
-            <Link href={`/stories/${lead.slug}`} className="hero-story">
+            <Link
+              href={`/stories/${encodeURIComponent(lead.slug)}`}
+              className="hero-story"
+            >
               <Image
                 src={lead.image}
                 alt={lead.imageAlt}
@@ -93,7 +130,9 @@ export default async function HomePage() {
                     <div>
                       <span className="category-label">{article.kind}</span>
                       <h3>
-                        <Link href={`/stories/${article.slug}`}>
+                        <Link
+                          href={`/stories/${encodeURIComponent(article.slug)}`}
+                        >
                           {article.title}
                         </Link>
                       </h3>
@@ -102,7 +141,7 @@ export default async function HomePage() {
                       </span>
                     </div>
                     <Link
-                      href={`/stories/${article.slug}`}
+                      href={`/stories/${encodeURIComponent(article.slug)}`}
                       className="dispatch-image"
                       aria-label={article.title}
                     >
@@ -136,7 +175,7 @@ export default async function HomePage() {
           </span>
           <div>
             {topics.map((topic) => (
-              <Link key={topic.slug} href={`/stories?topic=${topic.slug}`}>
+              <Link key={topic.slug} href={`/topics/${topic.slug}`}>
                 {topic.name} <ArrowUpRight size={12} />
               </Link>
             ))}
@@ -183,7 +222,7 @@ export default async function HomePage() {
                 making connections that matter.
               </p>
               <Link
-                href={`/stories/${people.slug}`}
+                href={`/stories/${encodeURIComponent(people.slug)}`}
                 className="button button-dark"
               >
                 Meet the people behind it <ArrowUpRight size={17} />
@@ -202,7 +241,7 @@ export default async function HomePage() {
               return (
                 <Link
                   key={topic.slug}
-                  href={`/stories?topic=${topic.slug}`}
+                  href={`/topics/${topic.slug}`}
                   className="coverage-card"
                 >
                   <div className="coverage-card-top">

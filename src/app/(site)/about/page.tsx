@@ -1,11 +1,16 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { MapleMark } from "@/components/brand";
 import { topics } from "@/lib/types";
 import { isSanityConfigured } from "@/sanity/env";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "A Canadian perspective" };
+export const metadata = buildMetadata({
+  title: "About Our Canadian Industry Publication",
+  description:
+    "Learn about Low Voltage Canada's coverage of AV, security, networking and smart buildings, and our approach to Canadian industry reporting.",
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (
@@ -64,7 +69,7 @@ export default function AboutPage() {
         <h2>Where we’re tuning in.</h2>
         <div>
           {topics.map((topic, index) => (
-            <Link key={topic.slug} href={`/stories?topic=${topic.slug}`}>
+            <Link key={topic.slug} href={`/topics/${topic.slug}`}>
               <span>0{index + 1}</span>
               <strong>{topic.name}</strong>
               <ArrowUpRight size={24} />

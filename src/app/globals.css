@@ -1198,6 +1198,19 @@ h3 {
   color: var(--muted);
   margin-bottom: 35px;
 }
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: var(--text-small);
+  line-height: 1.7;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+.breadcrumbs a:hover {
+  color: var(--red);
+  text-decoration: underline;
+}
 .back-link:hover {
   color: var(--red);
 }

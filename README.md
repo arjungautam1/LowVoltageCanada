@@ -49,7 +49,19 @@ The app reads only published content and refreshes cached stories with a 60-seco
 
 ## Deployment
 
-The project uses standard Next.js rendering and image optimization. Deploy to a provider supporting Next.js serverless functions and ISR, such as Vercel; no separately hosted CMS server or database is required. Set the same Sanity environment variables on the provider and add the deployed site origin to the project's CORS settings. No deployment has been created in this first step.
+The project uses standard Next.js rendering and image optimization. `vercel.json` selects Next.js, builds with `npm run build`, and uses `.next` output. Set Vercel's Root Directory to the repository root, rather than the nested standalone Studio. The Sanity project ID and dataset must be set on the hosting provider; local `.env.local` is excluded from Git. Add the deployed editor origin to Sanity CORS settings with credentials if you use `/studio` there. No separately hosted CMS server or database is required.
+
+## SEO and publishing
+
+- Canonical URLs use `NEXT_PUBLIC_SITE_URL`, or Vercel's production domain automatically. Set the explicit origin when connecting a custom domain. Preview deployments, localhost, and demo mode are not indexable.
+- Articles have optional search title, search description, social image, and search-indexing controls in Sanity. Defaults use the article headline, standfirst, and lead image. The editorial update date must describe a real, published update; unrelated CMS revisions do not change the article date.
+- `/topics/av-collaboration`, `/topics/security`, `/topics/networking`, and `/topics/smart-buildings` provide Canadian coverage hubs. Hubs become indexable once they contain an indexable published story.
+- `/authors/[slug]` displays contributor profiles and published stories. Add authentic biographies in Sanity; incomplete profiles stay out of search and the sitemap.
+- `/sitemap.xml` includes indexable published stories, populated topic hubs, and complete author profiles. `/news-sitemap.xml` includes only articles published in the last 48 hours. `/feed.xml` provides the latest 50 indexable stories as RSS.
+- Search, filtered listings, the editorial Studio, and demo stories are not indexed. Real stories can be individually excluded from search in Sanity without removing them from the website.
+- Page and article metadata include Canadian English language, canonical links, social cards, publication dates, and structured data for the publication, website, articles, contributors, and breadcrumbs.
+
+For launch, verify the final domain in Google Search Console and Bing Webmaster Tools, submit the sitemap URLs, and validate an article using Google's Rich Results Test. Optional verification codes can be configured through `GOOGLE_SITE_VERIFICATION` and `BING_SITE_VERIFICATION`. Replace demo/test reporting with original articles, add real contributor biographies and editorial contact details, and supply the final logo. These editorial and domain details must be authentic; technical SEO cannot guarantee rankings or Google News inclusion.
 
 ## Design
 

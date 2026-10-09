@@ -1,10 +1,30 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { getArticles } from "@/sanity/lib/queries";
 import { StoryCard } from "@/components/story-card";
 import { storyKinds, topics } from "@/lib/types";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "The stories" };
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const filters = await searchParams;
+  const kind = storyKinds.find((item) => item === filters.kind);
+  const topic = topics.find((item) => item.slug === filters.topic);
+  const canonical = topic && !kind ? `/topics/${topic.slug}` : "/stories";
+  return buildMetadata({
+    title: topic
+      ? `${topic.name} News in Canada`
+      : kind
+        ? `${kind} in Canada's Low-Voltage Industry`
+        : "Latest Canadian Industry Stories",
+    description:
+      "Browse Canadian AV, security, networking and smart-building coverage, from product news and people to integrators, companies and events.",
+    path: canonical,
+    noIndex: Object.keys(filters).length > 0,
+  });
+}
 
 export default async function StoriesPage({
   searchParams,

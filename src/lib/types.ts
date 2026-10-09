@@ -15,12 +15,29 @@ export interface Article {
   image: string;
   imageAlt: string;
   author: string;
+  authorSlug?: string;
   publishedAt: string;
+  updatedAt?: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  seoImage?: string;
+  noIndex?: boolean;
   readTime: number;
   featured: boolean;
   province?: string;
   body: PortableTextBlock[];
   isDemo?: boolean;
+}
+
+export interface Author {
+  id: string;
+  slug: string;
+  name: string;
+  role?: string;
+  bio?: string;
+  image?: string;
+  imageAlt?: string;
+  articles: Article[];
 }
 
 export const storyKinds: StoryKind[] = [
