@@ -46,7 +46,7 @@ export default async function StoriesPage({
     return `/stories${query.size ? `?${query}` : ""}`;
   };
   return (
-    <main id="main" className="container directory-main">
+    <main id="main" className="container directory-main stories-directory">
       <div className="page-kicker">
         <span className="signal-dot red-dot" /> THE LVC EDIT
       </div>
