@@ -108,6 +108,12 @@ export default async function ArticlePage({
                 "@type": "NewsMediaOrganization",
                 name: "Low Voltage Canada",
                 url: absoluteUrl("/"),
+                logo: {
+                  "@type": "ImageObject",
+                  url: absoluteUrl("/brand/low-voltage-canada.png"),
+                  width: 1254,
+                  height: 1254,
+                },
               },
               mainEntityOfPage: {
                 "@type": "WebPage",

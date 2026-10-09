@@ -11,7 +11,7 @@ A Canadian editorial publication covering AV, security, networking, and smart bu
 - About page and embedded Sanity Studio at `/studio`.
 - Sanity schemas for articles, authors, companies, people, and events.
 
-The site is connected to the existing Sanity project **`via74ij9`**, dataset **`production`**. Published articles come from Sanity. The dataset was empty when connected, so the site shows an empty newsroom until the first article is published. The wordmark is a temporary design until the final logo arrives.
+The site is connected to the existing Sanity project **`via74ij9`**, dataset **`production`**. Published articles come from Sanity. The supplied Low Voltage Canada logo is used in the header, footer, sharing card, and publication metadata. The original PNG is preserved in `public/brand/low-voltage-canada.png`; SVG viewports arrange its artwork for the compact header.
 
 ## Run locally
 
@@ -61,7 +61,7 @@ The project uses standard Next.js rendering and image optimization. `vercel.json
 - Search, filtered listings, the editorial Studio, and demo stories are not indexed. Real stories can be individually excluded from search in Sanity without removing them from the website.
 - Page and article metadata include Canadian English language, canonical links, social cards, publication dates, and structured data for the publication, website, articles, contributors, and breadcrumbs.
 
-For launch, verify the final domain in Google Search Console and Bing Webmaster Tools, submit the sitemap URLs, and validate an article using Google's Rich Results Test. Optional verification codes can be configured through `GOOGLE_SITE_VERIFICATION` and `BING_SITE_VERIFICATION`. Replace demo/test reporting with original articles, add real contributor biographies and editorial contact details, and supply the final logo. These editorial and domain details must be authentic; technical SEO cannot guarantee rankings or Google News inclusion.
+For launch, verify the final domain in Google Search Console and Bing Webmaster Tools, submit the sitemap URLs, and validate an article using Google's Rich Results Test. Optional verification codes can be configured through `GOOGLE_SITE_VERIFICATION` and `BING_SITE_VERIFICATION`. Replace demo/test reporting with original articles, add real contributor biographies and editorial contact details, and keep test stories hidden from search until launch. These editorial and domain details must be authentic; technical SEO cannot guarantee rankings or Google News inclusion.
 
 ## Design
 
@@ -69,5 +69,5 @@ Dependency note: the current dependency tree reports transitive npm advisories i
 
 Canadian red `#CE272E`, ink `#202321`, and warm paper `#F9F9F6`. Manrope headlines and DM Sans interface text are bundled locally through Fontsource. Hero and preview photographs use [Unsplash](https://unsplash.com), served through Next.js image optimization; they are illustrative and do not represent people or projects discussed in the sample text. Replace them with licensed editorial assets in Sanity for launch.
 
-Planned next steps: add the supplied logo, publish the first real stories, then configure the domain and deployment. Newsletter subscriptions, advertising, analytics, dedicated organization directories, and draft previews can follow when needed. Clearing the project ID explicitly restores the clearly labelled demo content for design review.
+Planned next steps: publish original reporting and configure the final custom domain. Newsletter subscriptions, advertising, analytics, dedicated organization directories, and draft previews can follow when needed. Clearing the project ID explicitly restores the clearly labelled demo content for design review.
 # LowVoltageCanada

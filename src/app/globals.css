@@ -145,6 +145,31 @@ h3 {
   flex-shrink: 0;
   align-self: center;
 }
+.brand-logo {
+  width: 260px;
+  height: auto;
+  display: block;
+  mix-blend-mode: multiply;
+}
+.brand-inverse {
+  background: var(--paper);
+  border-radius: 4px;
+  padding: 12px;
+  width: fit-content;
+}
+.brand-logo-full {
+  width: 210px;
+}
+@media (max-width: 680px) {
+  .masthead .brand-logo {
+    width: 220px;
+  }
+}
+@media (max-width: 380px) {
+  .masthead .brand-logo {
+    width: 190px;
+  }
+}
 .brand-leaf {
   width: 35px;
   height: 43px;

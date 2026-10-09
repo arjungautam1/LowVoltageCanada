@@ -20,14 +20,50 @@ export function Brand({ inverse = false }: { inverse?: boolean }) {
       className={`brand ${inverse ? "brand-inverse" : ""}`}
       aria-label="Low Voltage Canada homepage"
     >
-      <MapleMark className="brand-leaf" />
-      <span className="brand-type">
-        <span>LOW VOLTAGE</span>
-        <span className="brand-country">
-          CANADA
-          <span className="brand-rule" />
-        </span>
-      </span>
+      {inverse ? (
+        <svg
+          className="brand-logo brand-logo-full"
+          viewBox="70 200 1120 800"
+          aria-hidden="true"
+        >
+          <image
+            href="/brand/low-voltage-canada.png"
+            width="1254"
+            height="1254"
+          />
+        </svg>
+      ) : (
+        <svg className="brand-logo" viewBox="0 0 306 64" aria-hidden="true">
+          <svg
+            x="0"
+            y="2.5"
+            width="72"
+            height="59"
+            viewBox="320 210 720 590"
+            overflow="hidden"
+          >
+            <image
+              href="/brand/low-voltage-canada.png"
+              width="1254"
+              height="1254"
+            />
+          </svg>
+          <svg
+            x="78"
+            y="16"
+            width="228"
+            height="40"
+            viewBox="70 810 1120 180"
+            overflow="hidden"
+          >
+            <image
+              href="/brand/low-voltage-canada.png"
+              width="1254"
+              height="1254"
+            />
+          </svg>
+        </svg>
+      )}
     </Link>
   );
 }

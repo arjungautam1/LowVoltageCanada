@@ -44,6 +44,12 @@ export default async function HomePage() {
               name: siteConfig.name,
               alternateName: "LVC",
               url: absoluteUrl("/"),
+              logo: {
+                "@type": "ImageObject",
+                url: absoluteUrl("/brand/low-voltage-canada.png"),
+                width: 1254,
+                height: 1254,
+              },
               description: siteConfig.description,
               areaServed: { "@type": "Country", name: "Canada" },
               publishingPrinciples: absoluteUrl("/about#editorial"),
