@@ -1,10 +1,18 @@
 import { Resend } from "resend";
 
-function failure(status: number, reason?: string) {
+function failure(status: number, reason?: string, request?: Request) {
   if (reason) {
     console.error(`[Inquiry API] Rejected (${status}): ${reason}`);
   }
-  return Response.json({ error: "Unable to send your message." }, { status });
+  const showDebug =
+    request?.headers.get("x-debug") === "1" ||
+    (request ? new URL(request.url).searchParams.get("debug") === "1" : false);
+  return Response.json(
+    showDebug
+      ? { error: "Unable to send your message.", detail: reason }
+      : { error: "Unable to send your message." },
+    { status },
+  );
 }
 
 function isAllowedOrigin(request: Request): boolean {
@@ -54,31 +62,33 @@ export async function handleInquiry(request: Request): Promise<Response> {
     return failure(
       403,
       `Origin mismatch: origin="${request.headers.get("origin")}", url="${request.url}", host="${request.headers.get("x-forwarded-host") || request.headers.get("host")}"`,
+      request,
     );
   }
   if (!request.headers.get("content-type")?.startsWith("application/json")) {
-    return failure(415, "Invalid Content-Type");
+    return failure(415, "Invalid Content-Type", request);
   }
   if (Number(request.headers.get("content-length")) > 16_384) {
-    return failure(413, "Content too large");
+    return failure(413, "Content too large", request);
   }
 
   let input: Record<string, unknown>;
   try {
     const body = await request.text();
-    if (body.length > 16_384) return failure(413, "Body length too large");
+    if (body.length > 16_384) return failure(413, "Body length too large", request);
     const parsed: unknown = JSON.parse(body);
     if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-      return failure(400, "Malformed JSON body");
+      return failure(400, "Malformed JSON body", request);
     }
     input = parsed as Record<string, unknown>;
   } catch {
-    return failure(400, "JSON parse error");
+    return failure(400, "JSON parse error", request);
   }
 
   const fields = ["name", "email", "company", "inquiry", "message"] as const;
-  if (fields.some((field) => typeof input[field] !== "string"))
-    return failure(400);
+  if (fields.some((field) => typeof input[field] !== "string")) {
+    return failure(400, "Missing required fields or field not a string", request);
+  }
   const name = (input.name as string).trim();
   const email = (input.email as string).trim();
   const company = (input.company as string).trim();
@@ -95,11 +105,14 @@ export async function handleInquiry(request: Request): Promise<Response> {
     /[\r\n]/.test(inquiry) ||
     !message ||
     message.length > 2000
-  )
-    return failure(400);
+  ) {
+    return failure(400, "Field validation failed", request);
+  }
 
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return failure(503);
+  if (!apiKey) {
+    return failure(503, "Missing RESEND_API_KEY", request);
+  }
 
   const configuredTo = process.env.CONTACT_TO_EMAIL?.trim();
   const recipient =
@@ -114,6 +127,7 @@ export async function handleInquiry(request: Request): Promise<Response> {
       : "Low Voltage Canada <contact@lowvoltagecanada.com>";
 
   try {
+    const keyInfo = `keyPrefix=${apiKey.slice(0, 7)}, keyLen=${apiKey.length}`;
     const { data, error } = await new Resend(apiKey).emails.send(
       {
         from: sender,
@@ -132,13 +146,19 @@ export async function handleInquiry(request: Request): Promise<Response> {
       { signal: AbortSignal.timeout(10_000) },
     );
     if (error || !data?.id) {
-      return failure(502, `Resend error: ${JSON.stringify(error)}`);
+      return failure(
+        502,
+        `Resend error: ${JSON.stringify(error)} (${keyInfo}, from=${sender}, to=${recipient})`,
+        request,
+      );
     }
     return Response.json({ sent: true });
   } catch (err: unknown) {
     return failure(
       502,
       `Exception sending: ${err instanceof Error ? err.message : String(err)}`,
+      request,
     );
   }
 }
+
