@@ -428,7 +428,22 @@ h3 {
   text-transform: uppercase;
 }
 .hero-content {
+  position: relative;
+  isolation: isolate;
   padding: 0 34px 28px;
+}
+.hero-content::before {
+  content: "";
+  position: absolute;
+  inset: -48px 0 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(12, 22, 29, 0) 0,
+    rgba(12, 22, 29, 0.84) 48px,
+    rgba(12, 22, 29, 0.96) 100%
+  );
 }
 .hero-category {
   font-size: var(--text-small);
@@ -456,7 +471,7 @@ h3 {
   margin-top: 15px;
   font-size: var(--text-body);
   line-height: 1.85;
-  color: #d8dddd;
+  color: #eef1ef;
 }
 .hero-bottom {
   border-top: 1px solid #ffffff38;
