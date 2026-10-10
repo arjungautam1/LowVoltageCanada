@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Brand, MapleMark } from "./brand";
 import { topics } from "@/lib/types";
+import { siteConfig } from "@/lib/seo";
 
 export function SiteFooter() {
   return (
@@ -32,7 +33,7 @@ export function SiteFooter() {
               <Link href="/stories">
                 All stories <ArrowUpRight size={13} />
               </Link>
-              <Link href="/about#contact">Connect with us</Link>
+              <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
               <a href="/feed.xml">RSS feed</a>
             </div>
           </div>

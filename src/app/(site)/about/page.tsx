@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { MapleMark } from "@/components/brand";
 import { topics } from "@/lib/types";
 import { isSanityConfigured } from "@/sanity/env";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, siteConfig } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "About Our Canadian Industry Publication",
@@ -85,16 +85,13 @@ export default function AboutPage() {
           starts with a conversation.
         </h2>
         <p>
-          Have a product, project, person, or event on your radar? Our editorial
-          contact and story submission details will be available when Low
-          Voltage Canada launches.
+          Have a product, project, person, or event on your radar? Reach out for
+          story submissions, partnerships, or general inquiries.
         </p>
-        <Link href="/stories" className="button button-red">
-          {isSanityConfigured
-            ? "Explore the coverage"
-            : "Explore the preview edition"}{" "}
+        <a href={`mailto:${siteConfig.email}`} className="button button-red">
+          {siteConfig.email}
           <ArrowUpRight size={18} />
-        </Link>
+        </a>
       </section>
     </main>
   );
