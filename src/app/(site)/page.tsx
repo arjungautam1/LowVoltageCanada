@@ -78,22 +78,20 @@ export default async function HomePage() {
           <section className="lead-grid" aria-label="Top stories">
             <Link
               href={`/stories/${encodeURIComponent(lead.slug)}`}
-              className={`hero-story ${lead.slug === welcomeStorySlug ? "hero-story-welcome" : ""}`}
+              className="hero-story"
             >
-              {lead.slug !== welcomeStorySlug ? (
-                <>
-                  <Image
-                    src={lead.image}
-                    alt={lead.imageAlt}
-                    fill
-                    preload
-                    sizes="(max-width: 900px) 100vw, 70vw"
-                  />
-                  <div className="hero-overlay" />
-                </>
-              ) : (
-                <div className="hero-welcome-backdrop" />
-              )}
+              <Image
+                src={
+                  lead.slug === welcomeStorySlug
+                    ? "/images/cinematic-server-hero.jpg"
+                    : lead.image
+                }
+                alt={lead.imageAlt}
+                fill
+                preload
+                sizes="(max-width: 900px) 100vw, 70vw"
+              />
+              <div className="hero-overlay" />
               <div className="hero-topline">
                 <span className="hero-badge">
                   {lead.slug === welcomeStorySlug
