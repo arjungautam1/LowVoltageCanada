@@ -1,29 +1,79 @@
 import { Resend } from "resend";
 
-function failure(status: number) {
+function failure(status: number, reason?: string) {
+  if (reason) {
+    console.error(`[Inquiry API] Rejected (${status}): ${reason}`);
+  }
   return Response.json({ error: "Unable to send your message." }, { status });
+}
+
+function isAllowedOrigin(request: Request): boolean {
+  const origin = request.headers.get("origin");
+  if (!origin) return false;
+
+  try {
+    const originUrl = new URL(origin);
+    const requestUrl = new URL(request.url);
+
+    if (originUrl.origin === requestUrl.origin) return true;
+
+    const hostHeader = (
+      request.headers.get("x-forwarded-host") ||
+      request.headers.get("host") ||
+      requestUrl.host
+    ).toLowerCase();
+    const originHost = originUrl.host.toLowerCase();
+
+    // Match exact host or compare without port
+    if (originHost === hostHeader || originHost.replace(/:\d+$/, "") === hostHeader.replace(/:\d+$/, "")) {
+      return true;
+    }
+
+    // Handle www vs non-www
+    const bareOrigin = originHost.replace(/^www\./, "");
+    const bareHost = hostHeader.replace(/^www\./, "");
+    if (bareOrigin === bareHost) return true;
+
+    // Allow production domain
+    if (bareOrigin === "lowvoltagecanada.com") return true;
+
+    // Allow Vercel preview domains if request is on Vercel
+    if (bareOrigin.endsWith(".vercel.app") && bareHost.endsWith(".vercel.app")) {
+      return true;
+    }
+
+    return false;
+  } catch {
+    return false;
+  }
 }
 
 /** Only validated inquiries can reach the fixed, server-configured inbox. */
 export async function handleInquiry(request: Request): Promise<Response> {
-  const origin = request.headers.get("origin");
-  if (!origin || origin !== new URL(request.url).origin) return failure(403);
-  if (!request.headers.get("content-type")?.startsWith("application/json")) {
-    return failure(415);
+  if (!isAllowedOrigin(request)) {
+    return failure(
+      403,
+      `Origin mismatch: origin="${request.headers.get("origin")}", url="${request.url}", host="${request.headers.get("x-forwarded-host") || request.headers.get("host")}"`,
+    );
   }
-  if (Number(request.headers.get("content-length")) > 16_384)
-    return failure(413);
+  if (!request.headers.get("content-type")?.startsWith("application/json")) {
+    return failure(415, "Invalid Content-Type");
+  }
+  if (Number(request.headers.get("content-length")) > 16_384) {
+    return failure(413, "Content too large");
+  }
 
   let input: Record<string, unknown>;
   try {
     const body = await request.text();
-    if (body.length > 16_384) return failure(413);
+    if (body.length > 16_384) return failure(413, "Body length too large");
     const parsed: unknown = JSON.parse(body);
-    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed))
-      return failure(400);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      return failure(400, "Malformed JSON body");
+    }
     input = parsed as Record<string, unknown>;
   } catch {
-    return failure(400);
+    return failure(400, "JSON parse error");
   }
 
   const fields = ["name", "email", "company", "inquiry", "message"] as const;
@@ -81,9 +131,14 @@ export async function handleInquiry(request: Request): Promise<Response> {
       },
       { signal: AbortSignal.timeout(10_000) },
     );
-    if (error || !data?.id) return failure(502);
+    if (error || !data?.id) {
+      return failure(502, `Resend error: ${JSON.stringify(error)}`);
+    }
     return Response.json({ sent: true });
-  } catch {
-    return failure(502);
+  } catch (err: unknown) {
+    return failure(
+      502,
+      `Exception sending: ${err instanceof Error ? err.message : String(err)}`,
+    );
   }
 }
