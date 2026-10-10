@@ -1,18 +1,10 @@
 import { Resend } from "resend";
 
-function failure(status: number, reason?: string, request?: Request) {
+function failure(status: number, reason?: string) {
   if (reason) {
     console.error(`[Inquiry API] Rejected (${status}): ${reason}`);
   }
-  const showDebug =
-    request?.headers.get("x-debug") === "1" ||
-    (request ? new URL(request.url).searchParams.get("debug") === "1" : false);
-  return Response.json(
-    showDebug
-      ? { error: "Unable to send your message.", detail: reason }
-      : { error: "Unable to send your message." },
-    { status },
-  );
+  return Response.json({ error: "Unable to send your message." }, { status });
 }
 
 function isAllowedOrigin(request: Request): boolean {
@@ -152,7 +144,6 @@ export async function handleInquiry(request: Request): Promise<Response> {
   const sender = cleanSender(process.env.RESEND_FROM_EMAIL);
 
   try {
-    const keyInfo = `keyPrefix=${apiKey.slice(0, 7)}, keyLen=${apiKey.length}`;
     const { data, error } = await new Resend(apiKey).emails.send(
       {
         from: sender,
@@ -173,8 +164,7 @@ export async function handleInquiry(request: Request): Promise<Response> {
     if (error || !data?.id) {
       return failure(
         502,
-        `Resend error: ${JSON.stringify(error)} (${keyInfo}, from=${sender}, to=${recipient})`,
-        request,
+        `Resend error: ${JSON.stringify(error)} (from=${sender}, to=${recipient})`,
       );
     }
     return Response.json({ sent: true });
@@ -182,7 +172,6 @@ export async function handleInquiry(request: Request): Promise<Response> {
     return failure(
       502,
       `Exception sending: ${err instanceof Error ? err.message : String(err)}`,
-      request,
     );
   }
 }
