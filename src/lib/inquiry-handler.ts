@@ -49,9 +49,19 @@ export async function handleInquiry(request: Request): Promise<Response> {
     return failure(400);
 
   const apiKey = process.env.RESEND_API_KEY;
-  const recipient = process.env.CONTACT_TO_EMAIL;
-  const sender = process.env.RESEND_FROM_EMAIL;
-  if (!apiKey || !recipient || !sender) return failure(503);
+  if (!apiKey) return failure(503);
+
+  const configuredTo = process.env.CONTACT_TO_EMAIL?.trim();
+  const recipient =
+    configuredTo && configuredTo !== "arjungautam2357@gmail.com"
+      ? configuredTo
+      : "contact@lowvoltagecanada.com";
+
+  const configuredFrom = process.env.RESEND_FROM_EMAIL?.trim();
+  const sender =
+    configuredFrom && !configuredFrom.includes("onboarding@resend.dev")
+      ? configuredFrom
+      : "Low Voltage Canada <contact@lowvoltagecanada.com>";
 
   try {
     const { data, error } = await new Resend(apiKey).emails.send(
