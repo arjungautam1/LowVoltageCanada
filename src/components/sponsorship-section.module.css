@@ -1,0 +1,208 @@
+.section {
+  padding-block: 48px 64px;
+}
+
+.inner {
+  width: calc(100% - 112px);
+  max-width: 1392px;
+  margin-inline: auto;
+  padding-top: 36px;
+  border-top: 1px solid var(--line);
+}
+
+.intro {
+  max-width: 720px;
+}
+
+.eyebrow {
+  margin-bottom: 12px;
+  color: var(--red);
+  font-size: var(--text-small);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.intro h2 {
+  font-size: clamp(30px, 3vw, 42px);
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+}
+
+.description {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 28px;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+.card h3 {
+  font-size: 25px;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+}
+
+.price {
+  margin-block: 8px 16px;
+  color: var(--red-dark);
+  font-weight: 600;
+}
+
+.card > p:not(.price) {
+  color: var(--muted);
+}
+
+.cardLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 24px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.cardLink svg,
+.emailLink svg {
+  flex-shrink: 0;
+}
+
+.cardLink:hover,
+.emailLink:hover {
+  color: var(--red-dark);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.cardLink:focus-visible,
+.emailLink:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 5px;
+}
+
+.community {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-top: 24px;
+  font-size: var(--text-small);
+}
+
+.community > span {
+  color: var(--muted);
+}
+
+.community a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.community a:hover {
+  color: var(--red-dark);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.community a:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 5px;
+}
+
+.disclosure {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: var(--text-small);
+}
+
+.collaborate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.collaborate > div {
+  max-width: 650px;
+}
+
+.collaborate h3 {
+  margin-bottom: 8px;
+  font-size: 21px;
+  line-height: 1.35;
+}
+
+.collaborate p {
+  color: var(--muted);
+}
+
+.emailLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  color: var(--red-dark);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 900px) {
+  .collaborate {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 680px) {
+  .section {
+    padding-block: 28px 40px;
+  }
+
+  .inner {
+    width: calc(100% - 40px);
+    padding-top: 28px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .card {
+    padding: 24px;
+  }
+
+  .card h3 {
+    font-size: 23px;
+  }
+
+  .emailLink {
+    max-width: 100%;
+  }
+}

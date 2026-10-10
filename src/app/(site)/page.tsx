@@ -15,6 +15,8 @@ import { MapleMark } from "@/components/brand";
 import { topics } from "@/lib/types";
 import { absoluteUrl, buildMetadata, siteConfig } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
+import { SponsorshipSection } from "@/components/sponsorship-section";
+import { welcomeStorySlug } from "@/lib/publication";
 
 export const metadata = buildMetadata({
   title: "Canadian Low-Voltage Industry News",
@@ -101,7 +103,11 @@ export default async function HomePage() {
               />
               <div className="hero-overlay" />
               <div className="hero-topline">
-                <span className="hero-badge">THE BIG PICTURE</span>
+                <span className="hero-badge">
+                  {lead.slug === welcomeStorySlug
+                    ? "WELCOME TO LOW VOLTAGE CANADA"
+                    : "THE BIG PICTURE"}
+                </span>
                 <span className="hero-location">
                   <span className="signal-dot" /> {lead.province || "CANADA"}
                 </span>
@@ -281,6 +287,7 @@ export default async function HomePage() {
           </Link>
         </section>
       </div>
+      <SponsorshipSection />
     </main>
   );
 }
