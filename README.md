@@ -70,4 +70,19 @@ Dependency note: the current dependency tree reports transitive npm advisories i
 Canadian red `#CE272E`, ink `#202321`, and warm paper `#F9F9F6`. Manrope headlines and DM Sans interface text are bundled locally through Fontsource. Hero and preview photographs use [Unsplash](https://unsplash.com), served through Next.js image optimization; they are illustrative and do not represent people or projects discussed in the sample text. Replace them with licensed editorial assets in Sanity for launch.
 
 Planned next steps: publish original reporting and configure the final custom domain. Newsletter subscriptions, advertising, analytics, dedicated organization directories, and draft previews can follow when needed. Clearing the project ID explicitly restores the clearly labelled demo content for design review.
+
 # LowVoltageCanada
+
+## Contact and sponsorship email
+
+Both forms submit to `/api/inquiry`, which uses the Resend SDK on the server.
+Set `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, and `CONTACT_TO_EMAIL` in the local
+`.env.local` file and the Vercel Production environment. Never use a
+`NEXT_PUBLIC_` prefix for the API key or commit it. See `.env.example`.
+
+Until a sending domain is verified, `onboarding@resend.dev` can send to the
+email address associated with the Resend account. Once verification is complete,
+change `RESEND_FROM_EMAIL` to an address on the verified domain and redeploy.
+The visitor's email is used for Reply-To; the recipient is controlled on the server.
+
+Run `npm run test:email` for simulated request, validation, and timeout checks.

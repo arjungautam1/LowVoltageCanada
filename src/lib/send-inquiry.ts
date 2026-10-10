@@ -1,8 +1,9 @@
 type InquiryRequest = {
-  serviceId: string;
-  templateId: string;
-  publicKey: string;
-  templateParams: Record<string, string>;
+  name: string;
+  company: string;
+  email: string;
+  inquiry: string;
+  message: string;
 };
 
 type InquiryErrorCode = "timeout" | "network" | "rejected";
@@ -26,12 +27,7 @@ export class InquirySendError extends Error {
 }
 
 /** A deadline keeps both forms recoverable even if the provider stops responding. */
-export async function sendInquiry({
-  serviceId,
-  templateId,
-  publicKey,
-  templateParams,
-}: InquiryRequest): Promise<void> {
+export async function sendInquiry(inquiry: InquiryRequest): Promise<void> {
   const controller = new AbortController();
   let timeout: ReturnType<typeof setTimeout> | undefined;
   const deadline = new Promise<never>((_, reject) => {
@@ -43,16 +39,11 @@ export async function sendInquiry({
 
   try {
     const response = await Promise.race([
-      fetch("https://api.emailjs.com/api/v1.0/email/send", {
+      fetch("/api/inquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: controller.signal,
-        body: JSON.stringify({
-          service_id: serviceId,
-          template_id: templateId,
-          user_id: publicKey,
-          template_params: templateParams,
-        }),
+        body: JSON.stringify(inquiry),
       }),
       deadline,
     ]);

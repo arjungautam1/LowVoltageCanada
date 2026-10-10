@@ -24,10 +24,6 @@ const inquiryTypes = [
   "Job opportunities",
 ];
 
-const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-
 export function ContactForm({ email, contained = false }: ContactFormProps) {
   const formId = useId();
   const [errors, setErrors] = useState<FormErrors>({});
@@ -74,58 +70,32 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
       return;
     }
 
-    // Direct EmailJS send if credentials configured
-    if (serviceId && templateId && publicKey) {
-      inFlight.current = true;
-      setStatus("sending");
-      setErrorMessage("");
+    inFlight.current = true;
+    setStatus("sending");
+    setErrorMessage("");
 
-      try {
-        await sendInquiry({
-          serviceId,
-          templateId,
-          publicKey,
-          templateParams: {
-            name,
-            company: company || "Not specified",
-            email: replyEmail,
-            inquiry,
-            title: inquiry,
-            message,
-          },
-        });
-
-        setStatus("success");
-        form.reset();
-      } catch (err: unknown) {
-        setStatus("error");
-        setErrorMessage(
-          err instanceof InquirySendError
-            ? err.message
-            : "We couldn’t confirm your message was sent. Your message is still here.",
-        );
-      } finally {
-        inFlight.current = false;
-      }
-    } else {
-      // Fallback to opening mail draft if template/keys are not yet configured
-      const subject = `Low Voltage Canada: ${inquiry}${company ? ` (${company})` : ""}`;
-      const body = [
-        `Name: ${name}`,
-        company ? `Company: ${company}` : "",
-        `Email: ${replyEmail}`,
-        `Inquiry: ${inquiry}`,
-        "",
+    try {
+      await sendInquiry({
+        name,
+        company: company || "Not specified",
+        email: replyEmail,
+        inquiry,
         message,
-      ]
-        .filter(Boolean)
-        .join("\n");
+      });
 
-      window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      setStatus("success");
+      form.reset();
+    } catch (err: unknown) {
+      setStatus("error");
+      setErrorMessage(
+        err instanceof InquirySendError
+          ? err.message
+          : "We couldn’t confirm your message was sent. Your message is still here.",
+      );
+    } finally {
+      inFlight.current = false;
     }
   }
-
-  const isEmailConfigured = Boolean(serviceId && templateId && publicKey);
 
   return (
     <section
@@ -143,18 +113,9 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
           building.
         </p>
         <p className={styles.hint} id={`${formId}-hint`}>
-          {isEmailConfigured ? (
-            <>
-              Your message goes to <a href={`mailto:${email}`}>{email}</a>.
-              We’ll reply to the email address you provide.
-            </>
-          ) : (
-            <>
-              This form opens a draft addressed to{" "}
-              <a href={`mailto:${email}`}>{email}</a>. Review and send it in
-              your email app.
-            </>
-          )}
+          Your message goes directly to our team. We’ll reply to the email
+          address you provide. Prefer email?{" "}
+          <a href={`mailto:${email}`}>{email}</a>.
         </p>
       </div>
 
@@ -172,9 +133,8 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
             Message sent successfully!
           </strong>
           <p>
-            Thank you for reaching out. Your inquiry has been sent to{" "}
-            <strong>{email}</strong>. We will review it and get back to you
-            shortly.
+            Thank you for reaching out. Your inquiry has been sent to our team.
+            We’ll reply to the email address you provided.
           </p>
           <button
             type="button"
@@ -323,13 +283,9 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
               "Sending…"
             ) : status === "error" ? (
               "Try again"
-            ) : isEmailConfigured ? (
-              <>
-                Send message <ArrowUpRight size={18} aria-hidden="true" />
-              </>
             ) : (
               <>
-                Open email draft <ArrowUpRight size={18} aria-hidden="true" />
+                Send message <ArrowUpRight size={18} aria-hidden="true" />
               </>
             )}
           </button>

@@ -20,11 +20,6 @@ const inquiryOptions = [
   "Job opportunities",
 ];
 
-const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-const isEmailConfigured = Boolean(serviceId && templateId && publicKey);
-
 type SponsorshipModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -116,56 +111,32 @@ export function SponsorshipModal({
       return;
     }
 
-    if (serviceId && templateId && publicKey) {
-      const generation = ++requestGeneration.current;
-      inFlight.current = true;
-      setStatus("sending");
-      setErrorMessage("");
+    const generation = ++requestGeneration.current;
+    inFlight.current = true;
+    setStatus("sending");
+    setErrorMessage("");
 
-      try {
-        await sendInquiry({
-          serviceId,
-          templateId,
-          publicKey,
-          templateParams: {
-            name,
-            company: organization || "Not specified",
-            email: replyEmail,
-            inquiry: `${inquiry} (${planName})`,
-            title: `${inquiry} (${planName})`,
-            message,
-          },
-        });
-
-        if (generation !== requestGeneration.current) return;
-        setStatus("success");
-      } catch (err: unknown) {
-        if (generation !== requestGeneration.current) return;
-        setStatus("error");
-        setErrorMessage(
-          err instanceof InquirySendError
-            ? err.message
-            : "We couldn’t confirm your inquiry was sent. Your details are still here.",
-        );
-      } finally {
-        if (generation === requestGeneration.current) inFlight.current = false;
-      }
-    } else {
-      // Fallback
-      const subject = `Low Voltage Canada: ${inquiry} - ${planName}${organization ? ` (${organization})` : ""}`;
-      const body = [
-        `Plan/Interest: ${planName}`,
-        `Name: ${name}`,
-        organization ? `Organization: ${organization}` : "",
-        `Email: ${replyEmail}`,
-        `Inquiry: ${inquiry}`,
-        "",
+    try {
+      await sendInquiry({
+        name,
+        company: organization || "Not specified",
+        email: replyEmail,
+        inquiry: `${inquiry} (${planName})`,
         message,
-      ]
-        .filter(Boolean)
-        .join("\n");
+      });
 
-      window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      if (generation !== requestGeneration.current) return;
+      setStatus("success");
+    } catch (err: unknown) {
+      if (generation !== requestGeneration.current) return;
+      setStatus("error");
+      setErrorMessage(
+        err instanceof InquirySendError
+          ? err.message
+          : "We couldn’t confirm your inquiry was sent. Your details are still here.",
+      );
+    } finally {
+      if (generation === requestGeneration.current) inFlight.current = false;
     }
   }
 
@@ -231,13 +202,6 @@ export function SponsorshipModal({
           </div>
         ) : (
           <form className={styles.form} onSubmit={handleSubmit}>
-            {!isEmailConfigured && (
-              <p className={styles.statusHint}>
-                This opens a draft in your email app addressed to{" "}
-                <a href={`mailto:${email}`}>{email}</a>. Review and send it
-                there.
-              </p>
-            )}
             {status === "error" && (
               <div className={styles.errorBox} role="alert">
                 {errorMessage ||
@@ -347,11 +311,9 @@ export function SponsorshipModal({
             >
               {status === "sending"
                 ? "Sending…"
-                : !isEmailConfigured
-                  ? "Open email draft"
-                  : status === "error"
-                    ? "Try again"
-                    : "Send inquiry"}
+                : status === "error"
+                  ? "Try again"
+                  : "Send inquiry"}
             </button>
             <p className={styles.statusHint} role="status" aria-live="polite">
               {status === "sending"

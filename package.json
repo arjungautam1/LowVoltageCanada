@@ -8,7 +8,7 @@
     "start": "next start --hostname 0.0.0.0",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test:email": "node --test tests/send-inquiry.test.mjs",
+    "test:email": "node --test tests/send-inquiry.test.mjs tests/inquiry-handler.test.mjs",
     "studio": "npm --prefix low-voltage-canada run dev",
     "studio:build": "npm --prefix low-voltage-canada run build"
   },
@@ -23,6 +23,7 @@
     "next-sanity": "^13.3.4",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
+    "resend": "^6.32.1",
     "sanity": "^6.18.0",
     "styled-components": "^6.5.3"
   },

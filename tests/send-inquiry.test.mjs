@@ -3,17 +3,11 @@ import test from "node:test";
 import { InquirySendError, sendInquiry } from "../src/lib/send-inquiry.ts";
 
 const inquiry = {
-  serviceId: "test-service",
-  templateId: "test-template",
-  publicKey: "test-public-key",
-  templateParams: {
-    name: "A Test Reader",
-    company: "Example Integrator",
-    email: "reader@example.com",
-    inquiry: "Story or project",
-    title: "Story or project",
-    message: "Please consider our project for a story.",
-  },
+  name: "A Test Reader",
+  company: "Example Integrator",
+  email: "reader@example.com",
+  inquiry: "Story or project",
+  message: "Please consider our project for a story.",
 };
 
 function expectErrorCode(code) {
@@ -36,18 +30,13 @@ test("accepted responses send the expected payload once", async (t) => {
 
   assert.equal(request.mock.callCount(), 1);
   const [url, options] = request.mock.calls[0].arguments;
-  assert.equal(url, "https://api.emailjs.com/api/v1.0/email/send");
+  assert.equal(url, "/api/inquiry");
   assert.equal(options.method, "POST");
   assert.equal(
     new Headers(options.headers).get("content-type"),
     "application/json",
   );
-  assert.deepEqual(JSON.parse(options.body), {
-    service_id: inquiry.serviceId,
-    template_id: inquiry.templateId,
-    user_id: inquiry.publicKey,
-    template_params: inquiry.templateParams,
-  });
+  assert.deepEqual(JSON.parse(options.body), inquiry);
   assert.ok(options.signal instanceof AbortSignal);
 });
 
@@ -64,8 +53,6 @@ test("provider rejection is sanitized without reading its response body", async 
   await assert.rejects(sendInquiry(inquiry), (error) => {
     expectErrorCode("rejected")(error);
     assert.ok(!error.message.includes(providerText));
-    assert.ok(!error.message.includes(inquiry.publicKey));
-    assert.ok(!error.message.includes(inquiry.serviceId));
     return true;
   });
 
