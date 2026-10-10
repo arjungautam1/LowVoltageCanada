@@ -23,12 +23,9 @@ const inquiryTypes = [
   "General inquiry",
 ];
 
-const serviceId =
-  process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_v3ctqrx";
-const templateId =
-  process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_bnqm3fw";
-const publicKey =
-  process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "HTaYQ42Dzhx8695R7";
+const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
 export function ContactForm({ email, contained = false }: ContactFormProps) {
   const formId = useId();
