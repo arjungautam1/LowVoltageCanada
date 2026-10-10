@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="480" viewBox="0 0 1440 480" role="img" aria-labelledby="title description">
+  <title id="title">Welcome to Low Voltage Canada</title>
+  <desc id="description">An editorial Low Voltage Canada wordmark beside a Canadian flag, connected by fine cable traces on a warm cream background.</desc>
+  <defs>
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M50 0H0V50" fill="none" stroke="#202321" stroke-opacity=".055"/>
+    </pattern>
+    <symbol id="maple" viewBox="0 0 40 44">
+      <path d="m20 0 5 12 5-3-1 10 9-3-3 9 5 3-15 10 1 6h-5l1-6L0 28l5-3-3-9 9 3-1-10 5 3L20 0Z"/>
+    </symbol>
+  </defs>
+
+  <rect width="1440" height="480" fill="#f6f3eb"/>
+  <rect x="750" width="690" height="480" fill="url(#grid)"/>
+  <rect width="14" height="480" fill="#ce272e"/>
+
+  <g fill="none" stroke-linejoin="round">
+    <path d="M1440 51H1290V84H844V153H780" stroke="#202321" stroke-opacity=".22" stroke-width="2"/>
+    <path d="M690 374H915V356H1278V437H1440" stroke="#202321" stroke-width="3"/>
+    <path d="M1440 403H1320V346H1130" stroke="#ce272e" stroke-width="4"/>
+    <path d="M1073 0V45H1209V80" stroke="#ce272e" stroke-width="3"/>
+    <path d="M830 480V430H990V400" stroke="#202321" stroke-opacity=".22" stroke-width="2"/>
+  </g>
+  <g fill="#f6f3eb" stroke="#202321" stroke-width="3">
+    <circle cx="690" cy="374" r="8"/>
+    <circle cx="1278" cy="437" r="8"/>
+    <circle cx="990" cy="400" r="8"/>
+  </g>
+  <g fill="#ce272e">
+    <circle cx="1209" cy="80" r="6"/>
+    <circle cx="1130" cy="346" r="6"/>
+    <circle cx="780" cy="153" r="5"/>
+  </g>
+
+  <g font-family="Manrope, Arial, sans-serif">
+    <text x="342" y="96" fill="#62695f" font-size="18" font-weight="600" letter-spacing="2.5">A CANADIAN PERSPECTIVE</text>
+    <text x="338" y="205" fill="#202321" font-size="72" font-weight="800" letter-spacing="-3">Low Voltage</text>
+    <text x="338" y="287" fill="#202321" font-size="72" font-weight="800" letter-spacing="-3">Canada<tspan fill="#ce272e">.</tspan></text>
+    <text x="342" y="345" fill="#ce272e" font-size="20" font-weight="700" letter-spacing="1.8">CONNECTED BY PEOPLE.</text>
+  </g>
+
+  <g transform="translate(790 128) scale(.674)">
+    <rect width="460" height="230" fill="#ce272e"/>
+    <rect x="115" width="230" height="230" fill="#fffdf8"/>
+    <use href="#maple" x="166" y="41" width="128" height="148" fill="#ce272e"/>
+  </g>
+
+  <path d="M342 401H730" stroke="#202321" stroke-opacity=".18"/>
+  <g font-family="Manrope, Arial, sans-serif" font-size="16" font-weight="600" letter-spacing="2" fill="#62695f">
+    <text x="342" y="437">PRODUCTS. PEOPLE. PROJECTS.</text>
+  </g>
+  <path d="M1384 0V480" stroke="#202321" stroke-opacity=".08"/>
+  <rect x="1426" width="14" height="480" fill="#202321"/>
+</svg>

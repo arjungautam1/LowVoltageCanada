@@ -120,8 +120,7 @@ function normalizeArticle({
         ? imageBuilder
             .image(mainImage)
             .width(1600)
-            .height(1000)
-            .fit("crop")
+            .fit("max")
             .auto("format")
             .url()
         : "/images/story-placeholder.svg",

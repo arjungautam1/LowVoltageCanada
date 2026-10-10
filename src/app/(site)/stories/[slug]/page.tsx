@@ -6,6 +6,7 @@ import { PortableText } from "@portabletext/react";
 import { ArrowLeft } from "lucide-react";
 import { getArticle, getArticles } from "@/sanity/lib/queries";
 import { ShareButton } from "@/components/share-button";
+import { MapleMark } from "@/components/brand";
 import { SectionHeading } from "@/components/section-heading";
 import { StoryCard } from "@/components/story-card";
 import { absoluteUrl, breadcrumbs, buildMetadata, siteConfig } from "@/lib/seo";
@@ -141,34 +142,31 @@ export default async function ArticlePage({
       )}
       <article>
         <header className="article-header container">
-          <nav className="breadcrumbs" aria-label="Breadcrumb">
-            <Link href="/">Home</Link>
-            <span aria-hidden="true">/</span>
-            <Link href="/stories">Stories</Link>
-            <span aria-hidden="true">/</span>
-            <span aria-current="page">{article.title}</span>
-          </nav>
-          <Link className="back-link" href="/stories">
-            <ArrowLeft size={15} /> Back to the stories
-          </Link>
-          <div className="story-meta">
-            <Link
-              href={`/stories?kind=${article.kind}`}
-              className="category-label"
-            >
-              {article.kind}
+          <div className="article-topline">
+            <div className="story-meta">
+              <Link
+                href={`/stories?kind=${article.kind}`}
+                className="category-label"
+              >
+                {article.kind}
+              </Link>
+              {topic ? (
+                <Link href={`/topics/${topic.slug}`}>{article.topic}</Link>
+              ) : (
+                <span>{article.topic}</span>
+              )}
+            </div>
+            <Link className="back-link" href="/stories">
+              <ArrowLeft size={14} aria-hidden="true" /> All stories
             </Link>
-            {topic ? (
-              <Link href={`/topics/${topic.slug}`}>{article.topic}</Link>
-            ) : (
-              <span>{article.topic}</span>
-            )}
           </div>
           <h1>{article.title}</h1>
           <p className="article-deck">{article.excerpt}</p>
           <div className="article-byline">
             <div>
-              <span className="author-avatar">LV</span>
+              <span className="author-avatar" aria-hidden="true">
+                <MapleMark />
+              </span>
               <div>
                 <strong>
                   {authorPath ? (
@@ -184,7 +182,12 @@ export default async function ArticlePage({
                     <time dateTime={article.publishedAt}>
                       {new Date(article.publishedAt).toLocaleDateString(
                         "en-CA",
-                        { dateStyle: "long", timeZone: "America/Toronto" },
+                        {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                          timeZone: "America/Toronto",
+                        },
                       )}
                     </time>
                   )}{" "}
@@ -197,14 +200,19 @@ export default async function ArticlePage({
                       <time dateTime={article.updatedAt}>
                         {new Date(article.updatedAt).toLocaleDateString(
                           "en-CA",
-                          { dateStyle: "long", timeZone: "America/Toronto" },
+                          {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                            timeZone: "America/Toronto",
+                          },
                         )}
                       </time>
                     </span>
                   )}
               </div>
             </div>
-            <ShareButton />
+            <ShareButton compact />
           </div>
         </header>
         <figure className="article-figure container">
@@ -214,13 +222,12 @@ export default async function ArticlePage({
               alt={article.imageAlt}
               fill
               preload
-              sizes="100vw"
+              sizes="(max-width: 764px) calc(100vw - 44px), 720px"
             />
           </div>
-          <figcaption>
-            {article.imageAlt}
-            {article.isDemo ? " · Illustrative photography" : ""}
-          </figcaption>
+          {article.isDemo && (
+            <figcaption>Illustrative photography · Sample story</figcaption>
+          )}
         </figure>
         <div className="article-body-wrap">
           {article.isDemo && (

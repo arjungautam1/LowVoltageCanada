@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Check, Link as LinkIcon } from "lucide-react";
 
-export function ShareButton() {
+export function ShareButton({ compact = false }: { compact?: boolean }) {
   const [status, setStatus] = useState<"idle" | "copied" | "failed">("idle");
   async function copyLink() {
     try {
@@ -15,9 +15,25 @@ export function ShareButton() {
   }
   return (
     <div className="share-control">
-      <button className="share-button" onClick={copyLink}>
+      <button
+        className={`share-button ${compact ? "share-button-compact" : ""}`}
+        aria-label={
+          compact
+            ? status === "copied"
+              ? "Link copied"
+              : "Copy link to this story"
+            : undefined
+        }
+        onClick={copyLink}
+      >
         {status === "copied" ? <Check size={16} /> : <LinkIcon size={16} />}{" "}
-        {status === "copied" ? "Link copied" : "Copy story link"}
+        <span className="share-label">
+          {status === "copied"
+            ? "Link copied"
+            : compact
+              ? "Copy link"
+              : "Copy story link"}
+        </span>
       </button>
       <span
         role="status"
