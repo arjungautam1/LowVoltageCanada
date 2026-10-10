@@ -14,17 +14,6 @@ export function SiteHeader() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <div className="utility-bar">
-        <div className="container utility-inner">
-          <span>
-            <span className="signal-dot" /> THE SIGNAL FOR CANADA’S CONNECTED
-            INDUSTRY
-          </span>
-          <span className="edition-label">
-            INDEPENDENT PERSPECTIVE. CANADIAN FOCUS.
-          </span>
-        </div>
-      </div>
       <header className="site-header">
         <div className="container masthead">
           <Brand />

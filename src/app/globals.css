@@ -96,27 +96,6 @@ h3 {
 .skip-link:focus {
   transform: translateY(0);
 }
-.utility-bar {
-  background: var(--ink);
-  color: #eee;
-  font-size: var(--text-small);
-  letter-spacing: 0.06em;
-  font-weight: 500;
-}
-.utility-inner {
-  min-height: 40px;
-  padding-block: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px 24px;
-}
-.utility-inner > span:first-child {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
 .signal-dot {
   display: inline-block;
   width: 5px;
@@ -1608,9 +1587,6 @@ h3 {
   .masthead-note {
     display: none;
   }
-  .edition-label {
-    display: none;
-  }
   .main-nav {
     gap: 20px;
   }
@@ -1884,18 +1860,6 @@ h3 {
 @media (max-width: 680px) {
   .container {
     width: calc(100% - 36px);
-  }
-  .utility-inner {
-    min-height: 40px;
-    letter-spacing: 0.04em;
-    justify-content: center;
-  }
-  .utility-inner > span:first-child {
-    justify-content: center;
-    text-align: center;
-  }
-  .edition-label {
-    display: none;
   }
   .masthead {
     min-height: 72px;
