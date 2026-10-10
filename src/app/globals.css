@@ -367,6 +367,8 @@ h3 {
 }
 .hero-story > img {
   z-index: -2;
+  object-fit: cover;
+  object-position: 70% top;
   transition: transform 0.7s;
 }
 .hero-story:hover > img {
@@ -378,9 +380,10 @@ h3 {
   z-index: -1;
   background: linear-gradient(
     180deg,
-    rgba(12, 22, 29, 0.35) 0%,
-    rgba(12, 22, 29, 0.55) 40%,
-    rgba(12, 22, 29, 0.94) 100%
+    rgba(12, 22, 29, 0.08) 0%,
+    rgba(12, 22, 29, 0.22) 32%,
+    rgba(12, 22, 29, 0.82) 68%,
+    rgba(12, 22, 29, 0.96) 100%
   );
 }
 .hero-topline {
