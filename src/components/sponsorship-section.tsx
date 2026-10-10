@@ -1,12 +1,19 @@
+"use client";
+
+import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { communityLinks } from "@/lib/publication";
 import { siteConfig } from "@/lib/seo";
+import { SponsorshipModal } from "./sponsorship-modal";
 import styles from "./sponsorship-section.module.css";
 
 const emailLink = (subject: string) =>
   `mailto:${siteConfig.email}?subject=${encodeURIComponent(subject)}`;
 
 export function SponsorshipSection() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState("Bronze Sponsor");
+
   return (
     <section
       id="sponsor"
@@ -32,13 +39,17 @@ export function SponsorshipSection() {
               recognition, a link to your company, and agreed sponsor
               placements.
             </p>
-            <a
+            <button
+              type="button"
               className={styles.cardLink}
-              href={emailLink("Bronze sponsorship inquiry")}
+              onClick={() => {
+                setSelectedPlan("Bronze Sponsor");
+                setModalOpen(true);
+              }}
             >
               Become a Bronze Sponsor{" "}
               <ArrowUpRight size={18} aria-hidden="true" />
-            </a>
+            </button>
           </article>
 
           <article className={styles.card}>
@@ -49,13 +60,17 @@ export function SponsorshipSection() {
               company, projects, or hiring campaign, with a scope built
               together.
             </p>
-            <a
+            <button
+              type="button"
               className={styles.cardLink}
-              href={emailLink("Publication partnership inquiry")}
+              onClick={() => {
+                setSelectedPlan("Publication Partner");
+                setModalOpen(true);
+              }}
             >
               Discuss a partnership{" "}
               <ArrowUpRight size={18} aria-hidden="true" />
-            </a>
+            </button>
           </article>
         </div>
 
@@ -96,6 +111,13 @@ export function SponsorshipSection() {
           ))}
         </nav>
       </div>
+
+      <SponsorshipModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        planName={selectedPlan}
+        email={siteConfig.email}
+      />
     </section>
   );
 }

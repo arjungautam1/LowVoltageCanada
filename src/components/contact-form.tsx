@@ -16,11 +16,11 @@ type FormErrors = {
 };
 
 const inquiryTypes = [
+  "Sponsorship or partnership",
   "Story or project",
   "Product or company spotlight",
-  "Job opportunity or event",
-  "Sponsorship or partnership",
   "General inquiry",
+  "Job opportunities",
 ];
 
 const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
