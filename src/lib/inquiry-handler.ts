@@ -109,22 +109,47 @@ export async function handleInquiry(request: Request): Promise<Response> {
     return failure(400, "Field validation failed", request);
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = process.env.RESEND_API_KEY?.trim();
   if (!apiKey) {
     return failure(503, "Missing RESEND_API_KEY", request);
   }
 
-  const configuredTo = process.env.CONTACT_TO_EMAIL?.trim();
-  const recipient =
-    configuredTo && configuredTo !== "arjungautam2357@gmail.com"
-      ? configuredTo
-      : "contact@lowvoltagecanada.com";
+  function cleanSender(raw: string | undefined): string {
+    if (!raw) return "Low Voltage Canada <contact@lowvoltagecanada.com>";
+    let trimmed = raw.trim().replace(/^["']|["']$/g, "").trim();
+    if (trimmed.includes("onboarding@resend.dev")) {
+      return "Low Voltage Canada <contact@lowvoltagecanada.com>";
+    }
+    const match = trimmed.match(/^([^<]*)<([^>]+)>/);
+    if (match) {
+      const name = match[1].trim();
+      const email = match[2].trim();
+      return name ? `${name} <${email}>` : email;
+    }
+    trimmed = trimmed.replace(/[)>.,;]+$/, "");
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+      return `Low Voltage Canada <${trimmed}>`;
+    }
+    return "Low Voltage Canada <contact@lowvoltagecanada.com>";
+  }
 
-  const configuredFrom = process.env.RESEND_FROM_EMAIL?.trim();
-  const sender =
-    configuredFrom && !configuredFrom.includes("onboarding@resend.dev")
-      ? configuredFrom
-      : "Low Voltage Canada <contact@lowvoltagecanada.com>";
+  function cleanRecipient(raw: string | undefined): string {
+    if (!raw) return "contact@lowvoltagecanada.com";
+    let trimmed = raw.trim().replace(/^["']|["']$/g, "").trim();
+    const match = trimmed.match(/<([^>]+)>/);
+    if (match) trimmed = match[1].trim();
+    trimmed = trimmed.replace(/[)>.,;]+$/, "");
+    if (
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed) &&
+      trimmed !== "arjungautam2357@gmail.com"
+    ) {
+      return trimmed;
+    }
+    return "contact@lowvoltagecanada.com";
+  }
+
+  const recipient = cleanRecipient(process.env.CONTACT_TO_EMAIL);
+  const sender = cleanSender(process.env.RESEND_FROM_EMAIL);
 
   try {
     const keyInfo = `keyPrefix=${apiKey.slice(0, 7)}, keyLen=${apiKey.length}`;
