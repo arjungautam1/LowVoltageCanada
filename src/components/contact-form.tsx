@@ -36,6 +36,7 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
     const form = event.currentTarget;
     const data = new FormData(form);
     const name = String(data.get("name") || "").trim();
+    const company = String(data.get("company") || "").trim();
     const replyEmail = String(data.get("email") || "").trim();
     const inquiry = String(data.get("inquiry") || "General inquiry");
     const message = String(data.get("message") || "").trim();
@@ -58,14 +59,17 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
       return;
     }
 
-    const subject = `Low Voltage Canada: ${inquiry}`;
+    const subject = `Low Voltage Canada: ${inquiry}${company ? ` (${company})` : ""}`;
     const body = [
       `Name: ${name}`,
+      company ? `Company: ${company}` : "",
       `Email: ${replyEmail}`,
       `Inquiry: ${inquiry}`,
       "",
       message,
-    ].join("\n");
+    ]
+      .filter(Boolean)
+      .join("\n");
 
     window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
@@ -139,21 +143,34 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
           </div>
         </div>
 
-        <div className={styles.field}>
-          <label htmlFor={`${formId}-inquiry`}>
-            What would you like to discuss?
-          </label>
-          <select
-            id={`${formId}-inquiry`}
-            name="inquiry"
-            defaultValue="General inquiry"
-          >
-            {inquiryTypes.map((inquiry) => (
-              <option key={inquiry} value={inquiry}>
-                {inquiry}
-              </option>
-            ))}
-          </select>
+        <div className={styles.row}>
+          <div className={styles.field}>
+            <label htmlFor={`${formId}-company`}>Company / Organization</label>
+            <input
+              id={`${formId}-company`}
+              name="company"
+              autoComplete="organization"
+              maxLength={140}
+              placeholder="e.g. Integrator, Manufacturer, etc."
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor={`${formId}-inquiry`}>
+              What would you like to discuss?
+            </label>
+            <select
+              id={`${formId}-inquiry`}
+              name="inquiry"
+              defaultValue="General inquiry"
+            >
+              {inquiryTypes.map((inquiry) => (
+                <option key={inquiry} value={inquiry}>
+                  {inquiry}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className={styles.field}>
