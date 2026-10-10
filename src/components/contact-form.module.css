@@ -129,8 +129,37 @@
   background: var(--red-dark);
 }
 
+.submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
 .submit svg {
   flex-shrink: 0;
+}
+
+.successBox {
+  padding: 16px 20px;
+  background: #f0f7f2;
+  border-left: 4px solid #1e7e34;
+  color: #155724;
+  font-size: var(--text-body);
+  line-height: 1.6;
+}
+
+.successBox strong {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.errorBox {
+  padding: 14px 18px;
+  background: #fdf2f2;
+  border-left: 4px solid var(--red);
+  color: var(--red-dark);
+  font-size: var(--text-small);
+  line-height: 1.5;
 }
 
 @media (max-width: 900px) {

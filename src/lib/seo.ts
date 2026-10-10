@@ -25,7 +25,7 @@ function getOrigin(): string {
 
 export const siteConfig = {
   name: "Low Voltage Canada",
-  email: "arjun@lowvoltagecanada.com",
+  email: "contact@lowvoltagecanada.com",
   url: getOrigin(),
   description:
     "Canadian low-voltage industry news covering AV, security, networking and smart buildings, plus products, companies, integrators, people and events.",
