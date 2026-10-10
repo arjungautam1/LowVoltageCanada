@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Brand, MapleMark } from "./brand";
 import { topics } from "@/lib/types";
 import { siteConfig } from "@/lib/seo";
-import { communityLinks } from "@/lib/publication";
+import { CommunityLinks } from "./community-links";
 
 export function SiteFooter() {
   return (
@@ -17,6 +17,7 @@ export function SiteFooter() {
               <br />
               The industry. The people. What’s next.
             </p>
+            <CommunityLinks variant="footer" />
           </div>
           <div className="footer-links">
             <div>
@@ -30,22 +31,13 @@ export function SiteFooter() {
             <div>
               <span className="eyebrow">THE PUBLICATION</span>
               <Link href="/about">About Low Voltage Canada</Link>
+              <Link href="/about#contact">Contact & submissions</Link>
               <Link href="/about#editorial">Our editorial approach</Link>
               <Link href="/stories">
                 All stories <ArrowUpRight size={13} />
               </Link>
               <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
               <Link href="/#sponsor">Sponsor the publication</Link>
-              {communityLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {link.label} <ArrowUpRight size={13} />
-                </a>
-              ))}
               <a href="/feed.xml">RSS feed</a>
             </div>
           </div>

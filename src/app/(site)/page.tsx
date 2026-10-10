@@ -17,6 +17,7 @@ import { absoluteUrl, buildMetadata, siteConfig } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
 import { SponsorshipSection } from "@/components/sponsorship-section";
 import { welcomeStorySlug } from "@/lib/publication";
+import { ContactForm } from "@/components/contact-form";
 
 export const metadata = buildMetadata({
   title: "Canadian Low-Voltage Industry News",
@@ -35,7 +36,7 @@ export default async function HomePage() {
   const people = articles.find((article) => article.kind === "People");
   const topicIcons = [AudioLines, ShieldCheck, Radio, CircuitBoard];
   return (
-    <main id="main" className="home-main">
+    <main id="main" className="home-main launch-home">
       <StructuredData
         data={{
           "@context": "https://schema.org",
@@ -69,25 +70,10 @@ export default async function HomePage() {
         }}
       />
       <div className="container">
-        <div className="edition-row">
-          <span>
-            <span className="signal-dot red-dot" /> A CANADIAN PERSPECTIVE
-          </span>
-          <span>
-            {articles.some((article) => article.isDemo)
-              ? "PREVIEW EDITION · SAMPLE STORIES"
-              : "THE INDEPENDENT INDUSTRY PUBLICATION"}
-          </span>
-        </div>
-        <div className="home-intro">
-          <h1>
-            Canada, <span>connected.</span>
-          </h1>
-          <p>
-            Canadian news and perspectives on AV, security, networking, and
-            smart buildings.
-          </p>
-        </div>
+        <h1 className="sr-only">Canada’s low voltage industry, connected.</h1>
+        {articles.some((article) => article.isDemo) && (
+          <p className="page-kicker">PREVIEW EDITION · SAMPLE STORIES</p>
+        )}
         {lead ? (
           <section className="lead-grid" aria-label="Top stories">
             <Link
@@ -105,7 +91,7 @@ export default async function HomePage() {
               <div className="hero-topline">
                 <span className="hero-badge">
                   {lead.slug === welcomeStorySlug
-                    ? "WELCOME TO LOW VOLTAGE CANADA"
+                    ? "WELCOME TO LVC"
                     : "THE BIG PICTURE"}
                 </span>
                 <span className="hero-location">
@@ -288,6 +274,7 @@ export default async function HomePage() {
         </section>
       </div>
       <SponsorshipSection />
+      <ContactForm email={siteConfig.email} />
     </main>
   );
 }

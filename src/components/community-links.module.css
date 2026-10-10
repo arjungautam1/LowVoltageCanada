@@ -1,0 +1,97 @@
+.links {
+  display: flex;
+  gap: 8px;
+}
+
+.header {
+  align-items: center;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  color: #0a66c2;
+  transition:
+    color 150ms,
+    background-color 150ms,
+    border-color 150ms;
+}
+
+.link svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.link:hover {
+  color: #fff;
+  background: #0a66c2;
+  border-color: #0a66c2;
+}
+
+.link:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 4px;
+}
+
+.footer {
+  margin-top: 18px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.footer .link {
+  justify-content: flex-start;
+  gap: 10px;
+  width: auto;
+  height: auto;
+  min-height: 36px;
+  padding: 6px 10px;
+  border-color: #53584f;
+  color: #f0f0ec;
+}
+
+.footer .link:hover {
+  border-color: #0a66c2;
+  text-decoration: none;
+}
+
+@media (max-width: 680px) {
+  .header {
+    gap: 4px;
+  }
+
+  .header .link {
+    width: 32px;
+    height: 32px;
+  }
+
+  .header .link svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .masthead:global(.masthead) {
+    gap: 6px;
+  }
+
+  .masthead :global(.brand .brand-logo) {
+    width: clamp(140px, calc(100vw - 180px), 190px);
+  }
+
+  .masthead :global(.header-actions) {
+    gap: 2px;
+  }
+
+  .masthead :global(.header-actions .icon-button) {
+    min-width: 32px;
+    min-height: 32px;
+    padding: 5px;
+  }
+}

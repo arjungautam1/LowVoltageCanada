@@ -4,6 +4,8 @@ import { useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Menu, Search, X } from "lucide-react";
 import { Brand } from "./brand";
+import { CommunityLinks } from "./community-links";
+import communityStyles from "./community-links.module.css";
 import { storyKinds, topics } from "@/lib/types";
 
 export function SiteHeader() {
@@ -15,7 +17,7 @@ export function SiteHeader() {
         Skip to content
       </a>
       <header className="site-header">
-        <div className="container masthead">
+        <div className={`container masthead ${communityStyles.masthead}`}>
           <Brand />
           <div className="masthead-note">
             Canada’s voice for
@@ -23,6 +25,7 @@ export function SiteHeader() {
             <strong>secure technology.</strong>
           </div>
           <div className="header-actions">
+            <CommunityLinks />
             <button
               className="icon-button"
               aria-label="Search stories"

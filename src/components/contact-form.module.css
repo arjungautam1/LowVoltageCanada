@@ -1,0 +1,162 @@
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: 64px;
+  width: calc(100% - 112px);
+  max-width: 1392px;
+  margin-inline: auto;
+  margin-bottom: 64px;
+  padding-top: 36px;
+  border-top: 1px solid var(--line);
+}
+
+.contained {
+  width: 100%;
+  margin-top: 48px;
+}
+
+.eyebrow {
+  margin-bottom: 12px;
+  color: var(--red);
+  font-size: var(--text-small);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.intro h2 {
+  max-width: 520px;
+  margin-bottom: 16px;
+  font-size: clamp(30px, 3vw, 42px);
+  letter-spacing: -0.04em;
+  line-height: 1.25;
+}
+
+.intro > p:not(.eyebrow) {
+  color: var(--muted);
+}
+
+.hint {
+  margin-top: 20px;
+  font-size: var(--text-small);
+  line-height: 1.7;
+}
+
+.hint a {
+  color: var(--red-dark);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.field {
+  min-width: 0;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.field input,
+.field select,
+.field textarea {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  border: 1px solid #92978f;
+  border-radius: 0;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  line-height: 1.4;
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.field [aria-invalid="true"] {
+  border-color: var(--red-dark);
+}
+
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible,
+.hint a:focus-visible,
+.submit:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 4px;
+}
+
+.error {
+  margin-top: 8px;
+  color: var(--red-dark);
+  font-size: var(--text-small);
+}
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  gap: 16px;
+  min-height: 48px;
+  padding: 14px 22px;
+  border: 1px solid var(--red);
+  background: var(--red);
+  color: #fff;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.submit:hover {
+  border-color: var(--red-dark);
+  background: var(--red-dark);
+}
+
+.submit svg {
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .section {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .intro {
+    max-width: 650px;
+  }
+}
+
+@media (max-width: 680px) {
+  .section {
+    width: calc(100% - 40px);
+    margin-bottom: 40px;
+    padding-top: 28px;
+  }
+
+  .contained {
+    width: 100%;
+    margin-top: 32px;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

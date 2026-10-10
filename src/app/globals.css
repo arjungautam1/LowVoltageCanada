@@ -470,6 +470,36 @@ h3 {
   gap: 9px;
   flex-wrap: wrap;
 }
+.launch-home .lead-grid {
+  margin-top: 22px;
+  gap: 24px;
+}
+.launch-home .hero-story {
+  min-height: 420px;
+  gap: 24px;
+}
+.launch-home .hero-topline {
+  padding: 20px 24px;
+}
+.launch-home .hero-content {
+  padding: 0 24px 24px;
+}
+.launch-home .hero-content h2 {
+  font-size: clamp(28px, 2.6vw, 36px);
+  line-height: 1.18;
+  letter-spacing: -1.3px;
+}
+.launch-home .hero-content > p {
+  margin-top: 12px;
+  line-height: 1.7;
+}
+.launch-home .hero-category {
+  margin-bottom: 10px;
+}
+.launch-home .hero-bottom {
+  margin-top: 18px;
+  padding-top: 14px;
+}
 .tiny-dot {
   display: inline-block;
   height: 3px;
@@ -639,6 +669,16 @@ h3 {
 }
 .latest-section {
   margin-top: 44px;
+}
+.launch-home .radar-strip {
+  margin-top: 20px;
+  padding-block: 13px;
+}
+.launch-home .latest-section {
+  margin-top: 28px;
+}
+.launch-home .latest-section .section-heading {
+  margin-bottom: 20px;
 }
 .section-heading {
   display: flex;
@@ -927,14 +967,17 @@ h3 {
 .site-footer {
   background: var(--ink);
   color: #f0f0ec;
-  padding-top: 43px;
+  padding-top: 36px;
 }
 .footer-top {
-  display: flex;
-  justify-content: space-between;
-  gap: 40px;
-  padding-bottom: 39px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 36px 48px;
+  padding-bottom: 32px;
+  align-items: start;
+}
+.footer-top > div {
+  min-width: 0;
 }
 .brand-inverse .brand-country {
   color: #d5d7cc;
@@ -949,18 +992,19 @@ h3 {
   font-size: var(--text-body);
   line-height: 1.9;
   color: #9b9f95;
-  margin-top: 20px;
+  margin-top: 16px;
 }
 .footer-links {
-  display: flex;
-  gap: 24px 65px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 24px 36px;
   font-size: var(--text-body);
-  flex-wrap: wrap;
 }
 .footer-links > div {
   display: flex;
   flex-direction: column;
   gap: 11px;
+  min-width: 0;
 }
 .footer-links .eyebrow {
   font-size: var(--text-small);
@@ -972,6 +1016,7 @@ h3 {
   align-items: center;
   gap: 5px;
   color: #d3d7cd;
+  overflow-wrap: anywhere;
 }
 .footer-links a:hover {
   color: #fff;
@@ -983,8 +1028,8 @@ h3 {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  min-height: 70px;
-  padding-block: 20px;
+  min-height: 64px;
+  padding-block: 18px;
   flex-wrap: wrap;
   font-size: var(--text-small);
   color: #949d8b;
@@ -1805,6 +1850,7 @@ h3 {
     margin-left: 56px;
   }
   .footer-top {
+    grid-template-columns: 1fr;
     gap: 30px;
   }
   .footer-links {
@@ -2150,13 +2196,13 @@ h3 {
     padding-top: 32px;
   }
   .footer-top {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 28px;
     padding-bottom: 28px;
   }
   .footer-links {
-    gap: 35px;
-    justify-content: space-between;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 24px;
   }
   .footer-links > div {
     gap: 12px;
@@ -2172,10 +2218,10 @@ h3 {
   }
   .footer-bottom {
     height: auto;
-    min-height: 68px;
+    min-height: 60px;
     flex-wrap: wrap;
     gap: 13px;
-    padding-block: 17px;
+    padding-block: 16px;
   }
   .footer-bottom > span:last-child {
     display: none;

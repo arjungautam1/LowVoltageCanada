@@ -4,6 +4,7 @@ import { MapleMark } from "@/components/brand";
 import { topics } from "@/lib/types";
 import { isSanityConfigured } from "@/sanity/env";
 import { buildMetadata, siteConfig } from "@/lib/seo";
+import { ContactForm } from "@/components/contact-form";
 
 export const metadata = buildMetadata({
   title: "About Our Canadian Industry Publication",
@@ -77,22 +78,7 @@ export default function AboutPage() {
           ))}
         </div>
       </section>
-      <section className="contact-section" id="contact">
-        <span className="eyebrow">LET’S MAKE CONNECTIONS</span>
-        <h2>
-          Every good story
-          <br />
-          starts with a conversation.
-        </h2>
-        <p>
-          Have a product, project, person, or event on your radar? Reach out for
-          story submissions, partnerships, or general inquiries.
-        </p>
-        <a href={`mailto:${siteConfig.email}`} className="button button-red">
-          {siteConfig.email}
-          <ArrowUpRight size={18} />
-        </a>
-      </section>
+      <ContactForm email={siteConfig.email} contained />
     </main>
   );
 }
