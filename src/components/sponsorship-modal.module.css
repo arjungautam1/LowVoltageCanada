@@ -168,6 +168,7 @@
   justify-content: center;
   align-self: flex-start;
   gap: 12px;
+  min-width: 170px;
   min-height: 46px;
   padding: 12px 24px;
   border: 1px solid var(--red);
@@ -178,14 +179,15 @@
   transition: all 0.2s ease;
 }
 
-.submit:hover {
+.submit:hover:not(:disabled) {
   background: var(--red-dark);
   border-color: var(--red-dark);
 }
 
 .submit:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
+  border-color: var(--red-dark);
+  background: var(--red-dark);
+  cursor: wait;
 }
 
 .successBox {
@@ -208,6 +210,21 @@
   border-left: 4px solid var(--red);
   color: var(--red-dark);
   font-size: var(--text-small);
+}
+
+.statusHint {
+  margin: 0;
+  min-height: 24px;
+  color: var(--muted);
+  font-size: var(--text-small);
+  line-height: 1.6;
+}
+
+.statusHint a {
+  color: var(--red-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 600px) {

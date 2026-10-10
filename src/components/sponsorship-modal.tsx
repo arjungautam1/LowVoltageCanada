@@ -1,7 +1,15 @@
 "use client";
 
-import { useEffect, useId, useState, type FormEvent } from "react";
-import { CheckCircle2, Loader2, X } from "lucide-react";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type FormEvent,
+} from "react";
+import { CheckCircle2, X } from "lucide-react";
+import { InquirySendError, sendInquiry } from "@/lib/send-inquiry";
 import styles from "./sponsorship-modal.module.css";
 
 const inquiryOptions = [
@@ -15,6 +23,7 @@ const inquiryOptions = [
 const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
 const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
 const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+const isEmailConfigured = Boolean(serviceId && templateId && publicKey);
 
 type SponsorshipModalProps = {
   isOpen: boolean;
@@ -37,20 +46,31 @@ export function SponsorshipModal({
 }: SponsorshipModalProps) {
   const formId = useId();
   const [errors, setErrors] = useState<FormErrors>({});
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">(
-    "idle",
-  );
+  const [status, setStatus] = useState<
+    "idle" | "sending" | "success" | "error"
+  >("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const requestGeneration = useRef(0);
+  const inFlight = useRef(false);
+
+  const closeModal = useCallback(() => {
+    requestGeneration.current += 1;
+    inFlight.current = false;
+    setStatus("idle");
+    setErrors({});
+    setErrorMessage("");
+    onClose();
+  }, [onClose]);
 
   // Close on Escape key
   useEffect(() => {
     if (!isOpen) return;
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") closeModal();
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+  }, [isOpen, closeModal]);
 
   // Lock body scroll when open
   useEffect(() => {
@@ -58,11 +78,12 @@ export function SponsorshipModal({
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
-      setStatus("idle");
-      setErrors({});
+      inFlight.current = false;
     }
     return () => {
       document.body.style.overflow = "";
+      requestGeneration.current += 1;
+      inFlight.current = false;
     };
   }, [isOpen]);
 
@@ -74,6 +95,7 @@ export function SponsorshipModal({
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (inFlight.current) return;
 
     const form = event.currentTarget;
     const data = new FormData(form);
@@ -95,47 +117,38 @@ export function SponsorshipModal({
     }
 
     if (serviceId && templateId && publicKey) {
+      const generation = ++requestGeneration.current;
+      inFlight.current = true;
       setStatus("sending");
       setErrorMessage("");
 
       try {
-        const response = await fetch(
-          "https://api.emailjs.com/api/v1.0/email/send",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              service_id: serviceId,
-              template_id: templateId,
-              user_id: publicKey,
-              template_params: {
-                name,
-                company: organization || "Not specified",
-                email: replyEmail,
-                inquiry: `${inquiry} (${planName})`,
-                title: `${inquiry} (${planName})`,
-                message,
-              },
-            }),
+        await sendInquiry({
+          serviceId,
+          templateId,
+          publicKey,
+          templateParams: {
+            name,
+            company: organization || "Not specified",
+            email: replyEmail,
+            inquiry: `${inquiry} (${planName})`,
+            title: `${inquiry} (${planName})`,
+            message,
           },
-        );
+        });
 
-        if (!response.ok) {
-          const errText = await response.text();
-          throw new Error(errText || "Failed to send message");
-        }
-
+        if (generation !== requestGeneration.current) return;
         setStatus("success");
       } catch (err: unknown) {
-        console.error("EmailJS submission error:", err);
+        if (generation !== requestGeneration.current) return;
         setStatus("error");
         setErrorMessage(
-          err instanceof Error
+          err instanceof InquirySendError
             ? err.message
-            : "Could not send the inquiry. Please email us directly.",
+            : "We couldn’t confirm your inquiry was sent. Your details are still here.",
         );
+      } finally {
+        if (generation === requestGeneration.current) inFlight.current = false;
       }
     } else {
       // Fallback
@@ -160,7 +173,7 @@ export function SponsorshipModal({
     <div
       className={styles.overlay}
       onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
+        if (e.target === e.currentTarget) closeModal();
       }}
       role="presentation"
     >
@@ -173,7 +186,7 @@ export function SponsorshipModal({
         <button
           type="button"
           className={styles.closeButton}
-          onClick={onClose}
+          onClick={closeModal}
           aria-label="Close dialog"
         >
           <X size={20} />
@@ -211,17 +224,25 @@ export function SponsorshipModal({
               type="button"
               className={styles.submit}
               style={{ marginTop: 20 }}
-              onClick={onClose}
+              onClick={closeModal}
             >
               Done
             </button>
           </div>
         ) : (
           <form className={styles.form} onSubmit={handleSubmit}>
+            {!isEmailConfigured && (
+              <p className={styles.statusHint}>
+                This opens a draft in your email app addressed to{" "}
+                <a href={`mailto:${email}`}>{email}</a>. Review and send it
+                there.
+              </p>
+            )}
             {status === "error" && (
               <div className={styles.errorBox} role="alert">
-                Failed to send: {errorMessage || "Network error."} You can email
-                us directly at{" "}
+                {errorMessage ||
+                  "We couldn’t confirm your inquiry was sent. Your details are still here."}{" "}
+                You can email us directly at{" "}
                 <a
                   href={`mailto:${email}`}
                   style={{ textDecoration: "underline" }}
@@ -239,6 +260,7 @@ export function SponsorshipModal({
                   id={`${formId}-name`}
                   name="name"
                   autoComplete="name"
+                  disabled={status === "sending"}
                   required
                   maxLength={120}
                   aria-invalid={errors.name ? true : undefined}
@@ -255,6 +277,7 @@ export function SponsorshipModal({
                   name="email"
                   type="email"
                   autoComplete="email"
+                  disabled={status === "sending"}
                   required
                   maxLength={254}
                   aria-invalid={errors.email ? true : undefined}
@@ -273,6 +296,7 @@ export function SponsorshipModal({
                   id={`${formId}-organization`}
                   name="organization"
                   autoComplete="organization"
+                  disabled={status === "sending"}
                   maxLength={140}
                   placeholder="e.g. Integrator, Manufacturer, Distributor"
                 />
@@ -285,6 +309,7 @@ export function SponsorshipModal({
                 <select
                   id={`${formId}-inquiry`}
                   name="inquiry"
+                  disabled={status === "sending"}
                   defaultValue="Sponsorship or partnership"
                 >
                   {inquiryOptions.map((opt) => (
@@ -302,6 +327,7 @@ export function SponsorshipModal({
                 id={`${formId}-message`}
                 name="message"
                 rows={4}
+                disabled={status === "sending"}
                 required
                 maxLength={2000}
                 placeholder="Tell us what you have in mind or ask for pricing and placement details..."
@@ -317,19 +343,21 @@ export function SponsorshipModal({
               className={styles.submit}
               type="submit"
               disabled={status === "sending"}
+              aria-busy={status === "sending"}
             >
-              {status === "sending" ? (
-                <>
-                  <Loader2
-                    size={18}
-                    style={{ animation: "spin 1s linear infinite" }}
-                  />
-                  Sending inquiry...
-                </>
-              ) : (
-                "Send inquiry"
-              )}
+              {status === "sending"
+                ? "Sending…"
+                : !isEmailConfigured
+                  ? "Open email draft"
+                  : status === "error"
+                    ? "Try again"
+                    : "Send inquiry"}
             </button>
+            <p className={styles.statusHint} role="status" aria-live="polite">
+              {status === "sending"
+                ? "Sending your inquiry. This usually takes a few seconds."
+                : ""}
+            </p>
           </form>
         )}
       </div>

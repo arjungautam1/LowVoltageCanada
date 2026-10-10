@@ -1,7 +1,8 @@
 "use client";
 
-import { useId, useState, type FormEvent } from "react";
-import { ArrowUpRight, CheckCircle2, Loader2 } from "lucide-react";
+import { useId, useRef, useState, type FormEvent } from "react";
+import { ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { InquirySendError, sendInquiry } from "@/lib/send-inquiry";
 import styles from "./contact-form.module.css";
 
 type ContactFormProps = {
@@ -30,8 +31,11 @@ const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 export function ContactForm({ email, contained = false }: ContactFormProps) {
   const formId = useId();
   const [errors, setErrors] = useState<FormErrors>({});
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "sending" | "success" | "error"
+  >("idle");
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const inFlight = useRef(false);
 
   function clearError(field: keyof FormErrors) {
     setErrors((current) => ({ ...current, [field]: undefined }));
@@ -39,6 +43,7 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (inFlight.current) return;
 
     const form = event.currentTarget;
     const data = new FormData(form);
@@ -71,48 +76,36 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
 
     // Direct EmailJS send if credentials configured
     if (serviceId && templateId && publicKey) {
+      inFlight.current = true;
       setStatus("sending");
       setErrorMessage("");
 
       try {
-        const response = await fetch(
-          "https://api.emailjs.com/api/v1.0/email/send",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              service_id: serviceId,
-              template_id: templateId,
-              user_id: publicKey,
-              template_params: {
-                name,
-                company: company || "Not specified",
-                email: replyEmail,
-                inquiry,
-                title: inquiry,
-                message,
-              },
-            }),
+        await sendInquiry({
+          serviceId,
+          templateId,
+          publicKey,
+          templateParams: {
+            name,
+            company: company || "Not specified",
+            email: replyEmail,
+            inquiry,
+            title: inquiry,
+            message,
           },
-        );
-
-        if (!response.ok) {
-          const errText = await response.text();
-          throw new Error(errText || "Failed to send message");
-        }
+        });
 
         setStatus("success");
         form.reset();
       } catch (err: unknown) {
-        console.error("EmailJS submission error:", err);
         setStatus("error");
         setErrorMessage(
-          err instanceof Error
+          err instanceof InquirySendError
             ? err.message
-            : "Could not send the message. Please try emailing directly.",
+            : "We couldn’t confirm your message was sent. Your message is still here.",
         );
+      } finally {
+        inFlight.current = false;
       }
     } else {
       // Fallback to opening mail draft if template/keys are not yet configured
@@ -152,13 +145,14 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
         <p className={styles.hint} id={`${formId}-hint`}>
           {isEmailConfigured ? (
             <>
-              Send us a message directly and we’ll reply to you at{" "}
-              <a href={`mailto:${email}`}>{email}</a>.
+              Your message goes to <a href={`mailto:${email}`}>{email}</a>.
+              We’ll reply to the email address you provide.
             </>
           ) : (
             <>
               This form opens a draft addressed to{" "}
-              <a href={`mailto:${email}`}>{email}</a>.
+              <a href={`mailto:${email}`}>{email}</a>. Review and send it in
+              your email app.
             </>
           )}
         </p>
@@ -167,12 +161,20 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
       {status === "success" ? (
         <div className={styles.successBox} role="status">
           <strong>
-            <CheckCircle2 size={20} style={{ display: "inline", verticalAlign: "text-bottom", marginRight: 8 }} />
+            <CheckCircle2
+              size={20}
+              style={{
+                display: "inline",
+                verticalAlign: "text-bottom",
+                marginRight: 8,
+              }}
+            />
             Message sent successfully!
           </strong>
           <p>
             Thank you for reaching out. Your inquiry has been sent to{" "}
-            <strong>{email}</strong>. We will review it and get back to you shortly.
+            <strong>{email}</strong>. We will review it and get back to you
+            shortly.
           </p>
           <button
             type="button"
@@ -191,11 +193,15 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
         >
           {status === "error" && (
             <div className={styles.errorBox} role="alert">
-              Failed to send: {errorMessage || "Please check your network."}{" "}
-              You can also email us directly at{" "}
-              <a href={`mailto:${email}`} style={{ textDecoration: "underline" }}>
+              {errorMessage || "Your message couldn’t be sent."} You can also
+              email us directly at{" "}
+              <a
+                href={`mailto:${email}`}
+                style={{ textDecoration: "underline" }}
+              >
                 {email}
-              </a>.
+              </a>
+              .
             </div>
           )}
 
@@ -207,6 +213,7 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
                 name="name"
                 autoComplete="name"
                 required
+                disabled={status === "sending"}
                 maxLength={120}
                 aria-invalid={errors.name ? true : undefined}
                 aria-describedby={
@@ -233,6 +240,7 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
                 type="email"
                 autoComplete="email"
                 required
+                disabled={status === "sending"}
                 maxLength={254}
                 aria-invalid={errors.email ? true : undefined}
                 onChange={() => clearError("email")}
@@ -247,10 +255,13 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
 
           <div className={styles.row}>
             <div className={styles.field}>
-              <label htmlFor={`${formId}-company`}>Company / Organization</label>
+              <label htmlFor={`${formId}-company`}>
+                Company / Organization
+              </label>
               <input
                 id={`${formId}-company`}
                 name="company"
+                disabled={status === "sending"}
                 autoComplete="organization"
                 maxLength={140}
                 placeholder="e.g. Integrator, Manufacturer, etc."
@@ -264,6 +275,7 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
               <select
                 id={`${formId}-inquiry`}
                 name="inquiry"
+                disabled={status === "sending"}
                 defaultValue="General inquiry"
               >
                 {inquiryTypes.map((inquiry) => (
@@ -282,6 +294,7 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
               name="message"
               rows={5}
               required
+              disabled={status === "sending"}
               maxLength={2000}
               aria-invalid={errors.message ? true : undefined}
               aria-describedby={
@@ -304,22 +317,27 @@ export function ContactForm({ email, contained = false }: ContactFormProps) {
             className={styles.submit}
             type="submit"
             disabled={status === "sending"}
+            aria-busy={status === "sending"}
           >
             {status === "sending" ? (
-              <>
-                <Loader2 size={18} className="animate-spin" style={{ animation: "spin 1s linear infinite" }} />
-                Sending message...
-              </>
+              "Sending…"
+            ) : status === "error" ? (
+              "Try again"
             ) : isEmailConfigured ? (
               <>
                 Send message <ArrowUpRight size={18} aria-hidden="true" />
               </>
             ) : (
               <>
-                Send message <ArrowUpRight size={18} aria-hidden="true" />
+                Open email draft <ArrowUpRight size={18} aria-hidden="true" />
               </>
             )}
           </button>
+          <p className={styles.sendStatus} role="status" aria-live="polite">
+            {status === "sending"
+              ? "Sending your message. This usually takes a few seconds."
+              : ""}
+          </p>
         </form>
       )}
     </section>

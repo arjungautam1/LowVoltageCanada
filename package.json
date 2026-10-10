@@ -8,6 +8,7 @@
     "start": "next start --hostname 0.0.0.0",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "test:email": "node --test tests/send-inquiry.test.mjs",
     "studio": "npm --prefix low-voltage-canada run dev",
     "studio:build": "npm --prefix low-voltage-canada run build"
   },
