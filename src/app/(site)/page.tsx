@@ -16,7 +16,7 @@ import { topics } from "@/lib/types";
 import { absoluteUrl, buildMetadata, siteConfig } from "@/lib/seo";
 import { StructuredData } from "@/components/structured-data";
 import { SponsorshipSection } from "@/components/sponsorship-section";
-import { welcomeStorySlug } from "@/lib/publication";
+import { welcomeLeadUntil, welcomeStorySlug } from "@/lib/publication";
 import { ContactForm } from "@/components/contact-form";
 
 export const metadata = buildMetadata({
@@ -27,7 +27,24 @@ export const metadata = buildMetadata({
 
 export default async function HomePage() {
   const articles = await getArticles();
-  const lead = articles.find((article) => article.featured) ?? articles[0];
+  const now = new Date();
+  const isBeforeNovember = now.getTime() < welcomeLeadUntil.getTime();
+  const welcomeArticle = articles.find(
+    (article) => article.slug === welcomeStorySlug
+  );
+
+  // For the launch period through the end of October, keep "Welcome to Low Voltage Canada"
+  // pinned as the main hero ("The Big Picture") while other stories populate the side dispatches.
+  // After October ends, the most recently published story automatically takes "The Big Picture".
+  const lead =
+    (isBeforeNovember ? welcomeArticle : undefined) ??
+    articles.find(
+      (article) =>
+        article.featured &&
+        (isBeforeNovember || article.slug !== welcomeStorySlug)
+    ) ??
+    articles[0];
+
   const remaining = articles.filter((article) => article.id !== lead?.id);
   const dispatches = remaining.slice(0, 3);
   const latest = remaining.slice(3, 6).length
