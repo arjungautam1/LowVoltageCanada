@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { communityLinks } from "@/lib/publication";
 import { siteConfig } from "@/lib/seo";
@@ -21,6 +22,57 @@ export function SponsorshipSection() {
       aria-labelledby="sponsorship-heading"
     >
       <div className={styles.inner}>
+        <div className={styles.partnerStrip}>
+          <p className={styles.eyebrow}>INDUSTRY CONNECTIONS</p>
+          <div className={styles.partnerLogos}>
+            <a
+              href="https://www.apdigitalhub.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.partnerLogo}
+            >
+              <div className={styles.apLockup}>
+                <Image
+                  src="/brand/ap-digital-hub.svg"
+                  alt=""
+                  width={54}
+                  height={54}
+                />
+                <strong>AP Digital Hub</strong>
+              </div>
+              <span>Our parent company</span>
+            </a>
+            <a
+              href="https://www.delmitraining.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.partnerLogo}
+            >
+              <Image
+                src="/brand/delmi-training.png"
+                alt="Delmi Training Institute"
+                width={197}
+                height={60}
+              />
+              <span>Explore industry training</span>
+            </a>
+          </div>
+          <h2>Looking for industry partners and Bronze Sponsors.</h2>
+          <p>
+            Help us build a stronger community for Canada’s low voltage
+            industry.
+          </p>
+          <button
+            type="button"
+            className={styles.partnerCta}
+            onClick={() => {
+              setSelectedPlan("Publication Partner");
+              setModalOpen(true);
+            }}
+          >
+            Partner with us <ArrowUpRight size={18} aria-hidden="true" />
+          </button>
+        </div>
         <div className={styles.intro}>
           <p className={styles.eyebrow}>BUILD WITH US</p>
           <h2 id="sponsorship-heading">Support Low Voltage Canada.</h2>
