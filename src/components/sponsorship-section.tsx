@@ -23,7 +23,7 @@ export function SponsorshipSection() {
     >
       <div className={styles.inner}>
         <div className={styles.partnerStrip}>
-          <p className={styles.eyebrow}>INDUSTRY CONNECTIONS</p>
+          <p className={styles.eyebrow}>INDUSTRY PARTNERS</p>
           <div className={styles.partnerLogos}>
             <a
               href="https://www.apdigitalhub.com/"
@@ -49,10 +49,10 @@ export function SponsorshipSection() {
               className={styles.partnerLogo}
             >
               <Image
-                src="/brand/delmi-training.png"
+                src="/brand/delmi-training-institute.png"
                 alt="Delmi Training Institute"
-                width={197}
-                height={60}
+                width={1280}
+                height={720}
               />
               <span>Explore industry training</span>
             </a>
