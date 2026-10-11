@@ -40,7 +40,6 @@ export function SponsorshipSection() {
                 />
                 <strong>AP Digital Hub</strong>
               </div>
-              <span>Our parent company</span>
             </a>
             <a
               href="https://www.delmitraining.com/"
@@ -54,14 +53,9 @@ export function SponsorshipSection() {
                 width={1280}
                 height={720}
               />
-              <span>Explore industry training</span>
             </a>
           </div>
           <h2>Looking for industry partners and Bronze Sponsors.</h2>
-          <p>
-            Help us build a stronger community for Canada’s low voltage
-            industry.
-          </p>
           <button
             type="button"
             className={styles.partnerCta}
