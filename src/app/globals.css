@@ -2675,3 +2675,21 @@ h3 {
   aspect-ratio: 2.4;
   max-height: 180px;
 }
+
+.footer-ownership {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.footer-ownership a {
+  color: #e8ece4;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.footer-ownership a:hover {
+  color: #fff;
+}
+.footer-ownership a:focus-visible {
+  outline: 2px solid #e8ece4;
+  outline-offset: 4px;
+}

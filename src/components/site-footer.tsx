@@ -43,7 +43,20 @@ export function SiteFooter() {
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} Low Voltage Canada</span>
+          <div className="footer-ownership">
+            <span>© {new Date().getFullYear()} Low Voltage Canada</span>
+            <span>
+              An{" "}
+              <a
+                href="https://www.apdigitalhub.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                AP Digital Hub
+              </a>{" "}
+              venture
+            </span>
+          </div>
           <span className="made-in-canada">
             <MapleMark /> CANADIAN BY PERSPECTIVE.
           </span>
