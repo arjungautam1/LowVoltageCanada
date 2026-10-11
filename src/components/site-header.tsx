@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ArrowUpRight, Menu, Search, X } from "lucide-react";
 import { Brand } from "./brand";
 import { CommunityLinks } from "./community-links";
-import communityStyles from "./community-links.module.css";
 import { storyKinds, topics } from "@/lib/types";
 
 export function SiteHeader() {
@@ -17,22 +16,23 @@ export function SiteHeader() {
         Skip to content
       </a>
       <header className="site-header">
-        <div className={`container masthead ${communityStyles.masthead}`}>
+        <div className="container masthead">
           <Brand />
           <div className="masthead-note">
             Canada’s voice for
             <br />
             <strong>secure technology.</strong>
           </div>
+          <button
+            className="header-search"
+            aria-label="Search stories"
+            onClick={() => searchDialog.current?.showModal()}
+          >
+            <Search size={20} strokeWidth={1.7} aria-hidden="true" />
+            <span>Search stories</span>
+          </button>
           <div className="header-actions">
             <CommunityLinks />
-            <button
-              className="icon-button"
-              aria-label="Search stories"
-              onClick={() => searchDialog.current?.showModal()}
-            >
-              <Search size={21} strokeWidth={1.7} />
-            </button>
             <Link className="button button-red header-cta" href="/stories">
               Explore the stories <ArrowUpRight size={17} />
             </Link>

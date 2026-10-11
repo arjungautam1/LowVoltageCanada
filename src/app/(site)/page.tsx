@@ -30,7 +30,7 @@ export default async function HomePage() {
   const now = new Date();
   const isBeforeNovember = now.getTime() < welcomeLeadUntil.getTime();
   const welcomeArticle = articles.find(
-    (article) => article.slug === welcomeStorySlug
+    (article) => article.slug === welcomeStorySlug,
   );
 
   // For the launch period through the end of October, keep "Welcome to Low Voltage Canada"
@@ -41,7 +41,7 @@ export default async function HomePage() {
     articles.find(
       (article) =>
         article.featured &&
-        (isBeforeNovember || article.slug !== welcomeStorySlug)
+        (isBeforeNovember || article.slug !== welcomeStorySlug),
     ) ??
     articles[0];
 
@@ -123,8 +123,16 @@ export default async function HomePage() {
                 <div className="hero-category">
                   {lead.topic} <span>/</span> {lead.kind}
                 </div>
-                <h2>{lead.title}</h2>
-                <p>{lead.excerpt}</p>
+                <h2>
+                  {lead.slug === welcomeStorySlug
+                    ? "Welcome to Low Voltage Canada"
+                    : lead.title}
+                </h2>
+                <p>
+                  {lead.slug === welcomeStorySlug
+                    ? "A new home for Canada’s low voltage people, projects, products, and ideas."
+                    : lead.excerpt}
+                </p>
                 <div className="hero-bottom">
                   <span>
                     {lead.isDemo ? "Sample story" : lead.author}{" "}

@@ -25,7 +25,10 @@ function isAllowedOrigin(request: Request): boolean {
     const originHost = originUrl.host.toLowerCase();
 
     // Match exact host or compare without port
-    if (originHost === hostHeader || originHost.replace(/:\d+$/, "") === hostHeader.replace(/:\d+$/, "")) {
+    if (
+      originHost === hostHeader ||
+      originHost.replace(/:\d+$/, "") === hostHeader.replace(/:\d+$/, "")
+    ) {
       return true;
     }
 
@@ -38,7 +41,10 @@ function isAllowedOrigin(request: Request): boolean {
     if (bareOrigin === "lowvoltagecanada.com") return true;
 
     // Allow Vercel preview domains if request is on Vercel
-    if (bareOrigin.endsWith(".vercel.app") && bareHost.endsWith(".vercel.app")) {
+    if (
+      bareOrigin.endsWith(".vercel.app") &&
+      bareHost.endsWith(".vercel.app")
+    ) {
       return true;
     }
 
@@ -54,32 +60,31 @@ export async function handleInquiry(request: Request): Promise<Response> {
     return failure(
       403,
       `Origin mismatch: origin="${request.headers.get("origin")}", url="${request.url}", host="${request.headers.get("x-forwarded-host") || request.headers.get("host")}"`,
-      request,
     );
   }
   if (!request.headers.get("content-type")?.startsWith("application/json")) {
-    return failure(415, "Invalid Content-Type", request);
+    return failure(415, "Invalid Content-Type");
   }
   if (Number(request.headers.get("content-length")) > 16_384) {
-    return failure(413, "Content too large", request);
+    return failure(413, "Content too large");
   }
 
   let input: Record<string, unknown>;
   try {
     const body = await request.text();
-    if (body.length > 16_384) return failure(413, "Body length too large", request);
+    if (body.length > 16_384) return failure(413, "Body length too large");
     const parsed: unknown = JSON.parse(body);
     if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-      return failure(400, "Malformed JSON body", request);
+      return failure(400, "Malformed JSON body");
     }
     input = parsed as Record<string, unknown>;
   } catch {
-    return failure(400, "JSON parse error", request);
+    return failure(400, "JSON parse error");
   }
 
   const fields = ["name", "email", "company", "inquiry", "message"] as const;
   if (fields.some((field) => typeof input[field] !== "string")) {
-    return failure(400, "Missing required fields or field not a string", request);
+    return failure(400, "Missing required fields or field not a string");
   }
   const name = (input.name as string).trim();
   const email = (input.email as string).trim();
@@ -98,17 +103,20 @@ export async function handleInquiry(request: Request): Promise<Response> {
     !message ||
     message.length > 2000
   ) {
-    return failure(400, "Field validation failed", request);
+    return failure(400, "Field validation failed");
   }
 
   const apiKey = process.env.RESEND_API_KEY?.trim();
   if (!apiKey) {
-    return failure(503, "Missing RESEND_API_KEY", request);
+    return failure(503, "Missing RESEND_API_KEY");
   }
 
   function cleanSender(raw: string | undefined): string {
     if (!raw) return "Low Voltage Canada <contact@lowvoltagecanada.com>";
-    let trimmed = raw.trim().replace(/^["']|["']$/g, "").trim();
+    let trimmed = raw
+      .trim()
+      .replace(/^["']|["']$/g, "")
+      .trim();
     if (trimmed.includes("onboarding@resend.dev")) {
       return "Low Voltage Canada <contact@lowvoltagecanada.com>";
     }
@@ -127,7 +135,10 @@ export async function handleInquiry(request: Request): Promise<Response> {
 
   function cleanRecipient(raw: string | undefined): string {
     if (!raw) return "contact@lowvoltagecanada.com";
-    let trimmed = raw.trim().replace(/^["']|["']$/g, "").trim();
+    let trimmed = raw
+      .trim()
+      .replace(/^["']|["']$/g, "")
+      .trim();
     const match = trimmed.match(/<([^>]+)>/);
     if (match) trimmed = match[1].trim();
     trimmed = trimmed.replace(/[)>.,;]+$/, "");
@@ -175,4 +186,3 @@ export async function handleInquiry(request: Request): Promise<Response> {
     );
   }
 }
-

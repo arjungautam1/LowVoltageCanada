@@ -2504,3 +2504,168 @@ h3 {
     transform: none;
   }
 }
+
+/* Clear editorial blocks and a visible search entry on every screen. */
+.masthead {
+  gap: 24px;
+}
+.header-search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 160px;
+  max-width: 300px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--muted);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+.header-search:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+}
+.header-actions {
+  gap: 16px;
+}
+.launch-home .hero-story {
+  min-height: 360px;
+}
+.launch-home .hero-content h2 {
+  font-size: clamp(26px, 2.5vw, 34px);
+  line-height: 1.18;
+}
+.launch-home .dispatch-panel {
+  padding: 22px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--red);
+}
+.launch-home .latest-section,
+.launch-home .coverage-section {
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 2px solid var(--ink);
+}
+.launch-home .story-grid {
+  gap: 20px;
+}
+.launch-home .story-card {
+  background: #fff;
+  border: 1px solid var(--line);
+}
+.launch-home .story-card-content {
+  padding: 20px;
+}
+.launch-home .story-card p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+.launch-home .coverage-grid {
+  gap: 12px;
+  border: 0;
+}
+.launch-home .coverage-card {
+  padding: 20px !important;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+.launch-home .coverage-card p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+@media (max-width: 1150px) {
+  .masthead-note {
+    display: none;
+  }
+}
+@media (max-width: 900px) {
+  .masthead {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    padding-block: 16px;
+  }
+  .masthead .brand {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  .masthead .brand-logo {
+    width: min(250px, calc(100vw - 90px));
+  }
+  .header-actions {
+    display: contents;
+  }
+  .header-actions .menu-toggle {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+  }
+  .header-actions > nav {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .header-search {
+    grid-column: 1;
+    grid-row: 2;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+}
+@media (max-width: 680px) {
+  .launch-home .lead-grid {
+    gap: 20px;
+  }
+  .launch-home .hero-story {
+    min-height: 320px;
+  }
+  .launch-home .hero-content h2 {
+    font-size: 27px;
+  }
+  .launch-home .hero-content > p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .launch-home .dispatch-panel {
+    padding: 18px;
+  }
+  .launch-home .dispatch-item {
+    grid-template-columns: 20px minmax(0, 1fr) 64px;
+    gap: 10px;
+    padding-block: 18px !important;
+  }
+  .launch-home .dispatch-thumb {
+    width: 64px;
+    height: 64px;
+  }
+  .launch-home .dispatch-item h3 {
+    font-size: 17px;
+    line-height: 1.4;
+  }
+  .launch-home .latest-section,
+  .launch-home .coverage-section {
+    margin-top: 28px;
+    padding-top: 22px;
+  }
+  .launch-home .story-card-content {
+    padding: 18px;
+  }
+  .launch-home .story-card h3 {
+    font-size: 21px;
+  }
+  .launch-home .story-card p {
+    -webkit-line-clamp: 2;
+    line-height: 1.65;
+  }
+  .launch-home .coverage-card h3 {
+    font-size: 17px;
+  }
+}

@@ -1,13 +1,14 @@
 .section {
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
-  gap: 64px;
+  gap: 40px;
   width: calc(100% - 112px);
   max-width: 1392px;
   margin-inline: auto;
   margin-bottom: 64px;
-  padding-top: 36px;
-  border-top: 1px solid var(--line);
+  padding: 32px;
+  background: #fff;
+  border: 1px solid var(--line);
 }
 
 .contained {
@@ -26,7 +27,7 @@
 .intro h2 {
   max-width: 520px;
   margin-bottom: 16px;
-  font-size: clamp(30px, 3vw, 42px);
+  font-size: clamp(28px, 3vw, 34px);
   letter-spacing: -0.04em;
   line-height: 1.25;
 }
@@ -187,7 +188,7 @@
   .section {
     width: calc(100% - 40px);
     margin-bottom: 40px;
-    padding-top: 28px;
+    padding: 20px;
   }
 
   .contained {
