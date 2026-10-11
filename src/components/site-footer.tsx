@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { Brand, MapleMark } from "./brand";
 import { topics } from "@/lib/types";
@@ -43,24 +44,29 @@ export function SiteFooter() {
           </div>
         </div>
         <div className="footer-bottom">
-          <div className="footer-ownership">
-            <span>© {new Date().getFullYear()} Low Voltage Canada</span>
-            <span>
-              An{" "}
-              <a
-                href="https://www.apdigitalhub.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                AP Digital Hub
-              </a>{" "}
-              venture
-            </span>
-          </div>
+          <span>© {new Date().getFullYear()} Low Voltage Canada</span>
           <span className="made-in-canada">
             <MapleMark /> CANADIAN BY PERSPECTIVE.
           </span>
-          <span>Built for what’s next.</span>
+          <a
+            className="footer-venture"
+            href="https://www.apdigitalhub.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="An AP Digital Hub venture — visit AP Digital Hub"
+          >
+            <Image
+              src="/brand/ap-digital-hub.svg"
+              alt=""
+              width={40}
+              height={40}
+            />
+            <span>
+              <small>An AP Digital Hub venture</small>
+              <strong>AP Digital Hub</strong>
+            </span>
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </a>
         </div>
       </div>
     </footer>
