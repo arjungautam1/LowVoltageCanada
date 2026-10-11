@@ -2669,3 +2669,9 @@ h3 {
     font-size: 17px;
   }
 }
+
+/* Homepage previews keep the story ahead of the illustration. */
+.launch-home .story-image-link {
+  aspect-ratio: 2.4;
+  max-height: 180px;
+}
