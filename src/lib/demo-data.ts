@@ -116,8 +116,7 @@ export const demoArticles: Article[] = [
           heading: "Explore the training and technical resources",
           paragraphs: [
             "Delmi’s Network Cabling Specialist course outlines its infrastructure training. The CCTV Surveillance Technician course covers camera installation and troubleshooting. Its Electronics and Relays course describes the circuit fundamentals behind security systems, and the Access Control Technician curriculum explains the panel and door work. The full course catalogue also lists WHMIS and Working at Heights training.",
-            "For further technical reading, explore CDVI’s Learning Zone and access-control video tutorials. To learn about Delmi’s teaching approach and location, visit the institute’s About Us page.",
-            "Editorial note: this company highlight combines Delmi’s published course information with classroom details and photographs supplied for the story. The miniature door, 14-camera training setup, guest sessions, and planned courses are based on those supplied details. Low Voltage Canada’s founder works with Delmi Training Institute.",
+            "Disclosure: Low Voltage Canada’s founder works with Delmi Training Institute. This feature draws on Delmi’s published course information and supplied classroom details and photographs.",
           ],
         },
       ],
