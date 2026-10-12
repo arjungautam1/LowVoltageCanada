@@ -77,6 +77,10 @@ export const authorsQuery = defineQuery(`
 
 const fetchOptions = { next: { revalidate: 60, tags: ["articles"] } };
 const imageBuilder = client ? createImageUrlBuilder(client) : null;
+const localEditorialArticles = demoArticles.filter(
+  (article) =>
+    article.id === "delmi-training-institute-low-voltage-technicians",
+);
 
 type ArticleResult = Omit<Article, "image" | "seoImage"> & {
   mainImage?: SanityImageObject | null;
@@ -135,7 +139,10 @@ export async function getArticles(): Promise<Article[]> {
     {},
     fetchOptions,
   );
-  return articles.map(normalizeArticle);
+  return [
+    ...localEditorialArticles.map((article) => ({ ...article, body: [] })),
+    ...articles.map(normalizeArticle),
+  ];
 }
 
 export const getArticle = cache(
@@ -147,7 +154,9 @@ export const getArticle = cache(
       { slug },
       fetchOptions,
     );
-    return article ? normalizeArticle(article) : null;
+    return article
+      ? normalizeArticle(article)
+      : (localEditorialArticles.find((item) => item.slug === slug) ?? null);
   },
 );
 

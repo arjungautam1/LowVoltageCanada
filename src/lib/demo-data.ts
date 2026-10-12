@@ -9,6 +9,7 @@ type StorySection = { heading: string; paragraphs: string[] };
 function storyBody(
   introduction: string,
   sections: StorySection[],
+  includePreview = true,
 ): PortableTextBlock[] {
   let index = 0;
   const block = (
@@ -34,7 +35,7 @@ function storyBody(
   };
 
   return [
-    block(previewNote, "normal", true),
+    ...(includePreview ? [block(previewNote, "normal", true)] : []),
     block(introduction),
     ...sections.flatMap(({ heading, paragraphs }) => [
       block(heading, "h2"),
@@ -48,6 +49,72 @@ function photograph(id: string): string {
 }
 
 export const demoArticles: Article[] = [
+  {
+    id: "delmi-training-institute-low-voltage-technicians",
+    slug: "delmi-training-institute-building-canadas-next-generation-of-low-voltage-technicians",
+    title:
+      "From theory to the field: how Delmi Training Institute is building Canada’s next generation of low-voltage technicians",
+    excerpt:
+      "Inside the hands-on classroom helping technicians connect cabling, cameras, electronics, access control, networking, and safety into one practical skill set.",
+    kind: "Companies",
+    topic: "Security",
+    image: "/images/delmi-training-class.jpg",
+    imageAlt:
+      "Delmi Training Institute students and instructors gathered around security equipment in the classroom",
+    author: "LVC Editorial",
+    publishedAt: "2026-10-12T15:00:00.000Z",
+    readTime: 7,
+    featured: true,
+    province: "Ontario",
+    isDemo: false,
+    body: storyBody(
+      "Canada’s low-voltage industry is expanding faster than a classroom-only model can keep up. Integrators need people who can read a plan, terminate a cable, understand a relay, configure a panel, commission a camera, and work safely on site. Delmi Training Institute is building its program around that complete journey: explain the theory, put the equipment in front of the learner, and stay with the work until the learner can do it.",
+      [
+        {
+          heading: "The missing bridge between theory and the jobsite",
+          paragraphs: [
+            "Many new technicians enter the industry with one part of the picture. They may understand a product interface without having built the cable infrastructure beneath it, or know the vocabulary of access control without ever tracing a relay through a real door. Delmi’s hands-on approach is designed to close that gap.",
+            "Training starts with the foundations: infrastructure, pathways, patch panels, terminations, testing, and the habits that make an installation serviceable. From there, learners move into CCTV, electronics, relays, access control, and networking. Each subject is connected to the work that comes before and after it, so the system makes sense as a whole.",
+          ],
+        },
+        {
+          heading: "A lab built for real decisions",
+          paragraphs: [
+            "The institute’s lab gives students something a slide deck cannot: a place to make a connection, diagnose a fault, and see what changes. Its electronics board brings together CX-12 equipment, Altronix relays, a Weave sensor and pull station, and other components so learners can work through the fundamentals that even experienced technicians sometimes find difficult to explain.",
+            "A miniature training door turns access-control theory into a physical sequence. Students can follow the path from credential and reader to lock, request-to-exit, door position, power, and panel logic. That kind of repetition builds the confidence to approach a full-size opening with a clear method.",
+          ],
+        },
+        {
+          heading: "Fourteen camera platforms, one practical mindset",
+          paragraphs: [
+            "Camera training is deliberately broad. Delmi exposes learners to 14 camera systems, including Dahua, Avigilon, Axis, GSD, Hikvision, and cameras sourced from the varied channels technicians encounter in the field. The goal is not to memorize one menu; it is to learn how to mount, power, network, focus, configure, document, and troubleshoot a surveillance system.",
+            "That breadth matters for technicians who may inherit an existing installation, support a mixed fleet, or need to explain the difference between a specification and a usable result. Working across platforms teaches the underlying decisions while respecting the details that make each system different.",
+          ],
+        },
+        {
+          heading: "Access control that keeps pace with the market",
+          paragraphs: [
+            "Delmi has built relationships with manufacturers and technology partners including CDVI Americas, Kantech, and RBH, giving learners access to current access-control panels and a view of what is coming next. Recent training has worked through three different panels, with the emphasis on wiring, logic, programming, and commissioning rather than a single brand workflow.",
+            "The institute is also preparing future networking training around Lysora and planning an intercom course that includes DSC IQ and other systems. Those courses are still being developed, but the direction is clear: keep the lab close to the technologies technicians will meet as the market changes.",
+          ],
+        },
+        {
+          heading: "Safety is part of technical competence",
+          paragraphs: [
+            "A technician’s success is measured by more than whether a system powers up. Delmi includes Working at Heights and WHMIS training because safe practice belongs in the same conversation as tools, testing, and commissioning. Understanding the work environment helps new technicians protect themselves, their team, and the customer’s site.",
+          ],
+        },
+        {
+          heading: "Bringing the industry into the classroom",
+          paragraphs: [
+            "Manufacturers, integrators, and seasoned practitioners are invited into the classroom to share how systems are specified, installed, supported, and handed over. Those conversations give learners context that a manual cannot: what a site really asks of a technician, which mistakes cost time, and how a good installation earns trust.",
+            "Roland, the institute’s president, describes the purpose as filling the space between industry and the real classroom. That is the larger opportunity Delmi is pursuing: a place where the next generation can learn the fundamentals, handle current equipment, ask better questions, and enter Canada’s electronic-security and network-cabling workforce ready to contribute.",
+          ],
+        },
+      ],
+      false,
+    ),
+  },
   {
     id: "preview-connected-spaces",
     slug: "the-next-chapter-of-canadas-connected-spaces",
