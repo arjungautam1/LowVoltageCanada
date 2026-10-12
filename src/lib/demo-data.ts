@@ -68,7 +68,7 @@ export const demoArticles: Article[] = [
     province: "Ontario",
     isDemo: false,
     body: storyBody(
-      "Canada’s low-voltage industry is expanding faster than a classroom-only model can keep up. Integrators need people who can read a plan, terminate a cable, understand a relay, configure a panel, commission a camera, and work safely on site. Delmi Training Institute is building its program around that complete journey: explain the theory, put the equipment in front of the learner, and stay with the work until the learner can do it.",
+      "A working security system begins long before a camera appears on a screen or a credential opens a door. Behind those moments are cable terminations, power supplies, relay logic, network settings, and a technician who understands how they fit together. Delmi Training Institute in Woodbridge, Ontario, puts those connections at the centre of its teaching: students learn the principles, handle the equipment, and practise turning a diagram into a working system.",
       [
         {
           heading: "The missing bridge between theory and the jobsite",
@@ -94,8 +94,8 @@ export const demoArticles: Article[] = [
         {
           heading: "Access control that keeps pace with the market",
           paragraphs: [
-            "Delmi has built relationships with manufacturers and technology partners including CDVI Americas, Kantech, and RBH, giving learners access to current access-control panels and a view of what is coming next. Recent training has worked through three different panels, with the emphasis on wiring, logic, programming, and commissioning rather than a single brand workflow.",
-            "The institute is also preparing future networking training around Lysora and planning an intercom course that includes DSC IQ and other systems. Those courses are still being developed, but the direction is clear: keep the lab close to the technologies technicians will meet as the market changes.",
+            "Delmi’s published Access Control Technician curriculum lists CDVI, Kantech, and RBH equipment, alongside locking, relay, and power components. Working across three panel platforms gives students a way to compare how similar tasks are handled: connect an input, assign a credential, control an output, and diagnose a door that does not behave as expected.",
+            "Manufacturer learning resources can extend that practice beyond the classroom. CDVI’s Learning Zone explains credentials, locking, and access-control options, while its video tutorials give learners another way to revisit product-specific steps. Delmi also describes networking and intercom courses as being developed; availability and final equipment should be confirmed with the institute.",
           ],
         },
         {
@@ -109,6 +109,14 @@ export const demoArticles: Article[] = [
           paragraphs: [
             "Manufacturers, integrators, and seasoned practitioners are invited into the classroom to share how systems are specified, installed, supported, and handed over. Those conversations give learners context that a manual cannot: what a site really asks of a technician, which mistakes cost time, and how a good installation earns trust.",
             "Roland, the institute’s president, describes the purpose as filling the space between industry and the real classroom. That is the larger opportunity Delmi is pursuing: a place where the next generation can learn the fundamentals, handle current equipment, ask better questions, and enter Canada’s electronic-security and network-cabling workforce ready to contribute.",
+          ],
+        },
+        {
+          heading: "Explore the training and technical resources",
+          paragraphs: [
+            "Delmi’s Network Cabling Specialist course outlines its infrastructure training. The CCTV Surveillance Technician course covers camera installation and troubleshooting. Its Electronics and Relays course describes the circuit fundamentals behind security systems, and the Access Control Technician curriculum explains the panel and door work. The full course catalogue also lists WHMIS and Working at Heights training.",
+            "For further technical reading, explore CDVI’s Learning Zone and access-control video tutorials. To learn about Delmi’s teaching approach and location, visit the institute’s About Us page.",
+            "Editorial note: this company highlight combines Delmi’s published course information with classroom details and photographs supplied for the story. The miniature door, 14-camera training setup, guest sessions, and planned courses are based on those supplied details. Low Voltage Canada’s founder works with Delmi Training Institute.",
           ],
         },
       ],
@@ -444,3 +452,58 @@ export const demoArticles: Article[] = [
     ),
   },
 ];
+
+const delmiLinks: Record<string, string> = {
+  "Network Cabling Specialist course":
+    "https://www.delmitraining.com/ourcourses/network-cabling-specialist",
+  "CCTV Surveillance Technician course":
+    "https://www.delmitraining.com/ourcourses/cctv-surveillance-technician",
+  "Electronics and Relays course":
+    "https://www.delmitraining.com/ourcourses/electronics-and-relays",
+  "Access Control Technician curriculum":
+    "https://www.delmitraining.com/ourcourses/access-control-technician",
+  "full course catalogue": "https://www.delmitraining.com/ourcourses",
+  "CDVI’s Learning Zone": "https://www.cdvi.ca/learning-zone/",
+  "access-control video tutorials": "https://www.cdvi.ca/our-tutorials/",
+  "About Us page": "https://www.delmitraining.com/aboutus",
+};
+
+// Store inline links as Portable Text annotations so Studio and the site agree.
+const delmiArticle = demoArticles.find(
+  (article) =>
+    article.id === "delmi-training-institute-low-voltage-technicians",
+);
+if (delmiArticle) {
+  for (const block of delmiArticle.body) {
+    for (const [label, href] of Object.entries(delmiLinks)) {
+      const spanIndex = block.children.findIndex(
+        (span) => typeof span.text === "string" && span.text.includes(label),
+      );
+      if (spanIndex < 0) continue;
+      const span = block.children[spanIndex];
+      const text = String(span.text);
+      const offset = text.indexOf(label);
+      const key = `${block._key}-link-${block.markDefs?.length ?? 0}`;
+      block.markDefs = [
+        ...(block.markDefs ?? []),
+        { _type: "link", _key: key, href },
+      ];
+      block.children.splice(
+        spanIndex,
+        1,
+        { ...span, _key: `${key}-before`, text: text.slice(0, offset) },
+        {
+          ...span,
+          _key: `${key}-label`,
+          text: label,
+          marks: [...(span.marks ?? []), key],
+        },
+        {
+          ...span,
+          _key: `${key}-after`,
+          text: text.slice(offset + label.length),
+        },
+      );
+    }
+  }
+}
