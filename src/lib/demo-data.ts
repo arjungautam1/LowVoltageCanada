@@ -80,7 +80,8 @@ export const demoArticles: Article[] = [
         {
           heading: "A lab built for real decisions",
           paragraphs: [
-            "The institute’s lab gives students something a slide deck cannot: a place to make a connection, diagnose a fault, and see what changes. Its electronics board brings together CX-12 equipment, Altronix relays, a Weave sensor and pull station, and other components so learners can work through the fundamentals that even experienced technicians sometimes find difficult to explain.",
+            "Delmi’s custom electronics board turns circuit diagrams into something students can wire, test, and troubleshoot. Its published equipment list includes the Camden CX-12 Plus door interface relay, Altronix relays and timers, electric strikes, magnetic locks, and pull stations. Alongside the board’s touchless activation sensor, these components help learners follow a signal from an input device through relay contacts to the equipment it controls.",
+            "The Camden CX-12 Plus door interface relay coordinates automatic doors with systems such as access control and telephone entry. Its programmable operating modes and adjustable delays can control the sequence between releasing a lock and activating a door operator. For a learner, that makes relay logic tangible: what starts the sequence, which output changes, and why the timing matters. Camden identifies the original CX-12 as its earlier Switch Network model; the CX-12 Plus replaces that model and the CX-22.",
             "A miniature training door turns access-control theory into a physical sequence. Students can follow the path from credential and reader to lock, request-to-exit, door position, power, and panel logic. That kind of repetition builds the confidence to approach a full-size opening with a clear method.",
           ],
         },
@@ -454,6 +455,8 @@ export const demoArticles: Article[] = [
 ];
 
 const delmiLinks: Record<string, string> = {
+  "Camden CX-12 Plus door interface relay":
+    "https://www.camdencontrols.com/products/CX_12Plus_Door_Interface_Relay",
   "Network Cabling Specialist course":
     "https://www.delmitraining.com/ourcourses/network-cabling-specialist",
   "CCTV Surveillance Technician course":
