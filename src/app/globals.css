@@ -478,6 +478,7 @@ h3 {
 .launch-home .lead-grid {
   margin-top: 22px;
   gap: 24px;
+  align-items: start;
 }
 .launch-home .hero-story {
   min-height: 420px;
@@ -2535,6 +2536,8 @@ h3 {
 }
 .launch-home .hero-story {
   min-height: 360px;
+  height: clamp(430px, 34vw, 510px);
+  flex-wrap: nowrap;
 }
 .launch-home .hero-content h2 {
   font-size: clamp(26px, 2.5vw, 34px);
@@ -2545,6 +2548,24 @@ h3 {
   background: #fff;
   border: 1px solid var(--line);
   border-top: 3px solid var(--red);
+}
+.launch-home .dispatch-list {
+  flex: initial;
+}
+.launch-home .dispatch-item {
+  flex: initial;
+  padding-block: 16px;
+}
+.launch-home .dispatch-item h3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  line-height: 1.35;
+  margin-bottom: 9px;
+}
+.launch-home .dispatch-image img {
+  object-fit: cover;
 }
 .launch-home .latest-section,
 .launch-home .coverage-section {
@@ -2626,6 +2647,7 @@ h3 {
   }
   .launch-home .hero-story {
     min-height: 320px;
+    height: 390px;
   }
   .launch-home .hero-content h2 {
     font-size: 27px;
@@ -2642,7 +2664,7 @@ h3 {
     gap: 10px;
     padding-block: 18px !important;
   }
-  .launch-home .dispatch-thumb {
+  .launch-home .dispatch-image {
     width: 64px;
     height: 64px;
   }
