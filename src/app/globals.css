@@ -1448,13 +1448,13 @@ h3 {
   margin-top: 10px;
 }
 .article-figure-portrait > div {
-  aspect-ratio: auto;
-  height: clamp(280px, 55vw, 400px);
+  aspect-ratio: 3 / 2;
+  height: auto;
   max-height: none;
-  background: #f0f0ed;
 }
 .article-figure-portrait > div > img {
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center bottom;
 }
 .article-body-wrap {
   width: calc(100% - 44px);
