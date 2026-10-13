@@ -1447,6 +1447,15 @@ h3 {
   color: var(--muted);
   margin-top: 10px;
 }
+.article-figure-portrait > div {
+  aspect-ratio: auto;
+  height: clamp(280px, 55vw, 400px);
+  max-height: none;
+  background: #f0f0ed;
+}
+.article-figure-portrait > div > img {
+  object-fit: contain;
+}
 .article-body-wrap {
   width: calc(100% - 44px);
   max-width: 720px;

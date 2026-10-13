@@ -215,7 +215,9 @@ export default async function ArticlePage({
             <ShareButton compact />
           </div>
         </header>
-        <figure className="article-figure container">
+        <figure
+          className={`article-figure container${article.id === "delmi-training-institute-low-voltage-technicians" ? " article-figure-portrait" : ""}`}
+        >
           <div>
             <Image
               src={article.image}
