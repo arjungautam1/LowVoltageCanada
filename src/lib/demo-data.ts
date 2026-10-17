@@ -121,12 +121,6 @@ export const demoArticles: Article[] = [
             "For people entering the industry, the opportunity is to build a foundation across connected disciplines. For experienced workers returning to training, it is a chance to revisit fundamentals and explore equipment beyond their usual installations. From its Woodbridge classroom, Delmi is working towards the same purpose: helping Canada’s next generation of network cabling and electronic security professionals connect knowledge with practical skill.",
           ],
         },
-        {
-          heading: "Disclosure",
-          paragraphs: [
-            "Low Voltage Canada’s founder works with Delmi Training Institute. Classroom details and photographs were supplied for this feature.",
-          ],
-        },
       ],
       false,
     ),
