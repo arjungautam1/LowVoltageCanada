@@ -89,7 +89,7 @@ export const demoArticles: Article[] = [
           heading: "CCTV: understanding the camera and the system",
           paragraphs: [
             "CCTV brings cameras, network connections, power, and recording equipment together. Each component has a role: the camera captures the scene, the connection carries the video, and the recording system makes that footage available for review. Understanding the complete chain helps learners see why a working camera alone does not make a working surveillance system.",
-            "Delmi’s classroom includes 14 different cameras, with equipment from Dahua, Avigilon, Axis, and Hikvision. That variety gives learners exposure to different devices and interfaces. It creates opportunities to compare equipment and connect its physical construction with the way it is set up and used.",
+            "Delmi’s classroom includes 14 different cameras, with equipment from Dahua, Avigilon, Axis, Hikvision, and GSD. That variety gives learners exposure to different devices and interfaces. It creates opportunities to compare equipment and connect its physical construction with the way it is set up and used.",
           ],
         },
         {
