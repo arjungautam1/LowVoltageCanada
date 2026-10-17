@@ -121,6 +121,12 @@ export const demoArticles: Article[] = [
             "For people entering the industry, the opportunity is to build a foundation across connected disciplines. For experienced workers returning to training, it is a chance to revisit fundamentals and explore equipment beyond their usual installations. From its Woodbridge classroom, Delmi is working towards the same purpose: helping Canada’s next generation of network cabling and electronic security professionals connect knowledge with practical skill.",
           ],
         },
+        {
+          heading: "Learn more",
+          paragraphs: [
+            "Visit Delmi Training Institute’s website to explore its courses and training opportunities.",
+          ],
+        },
       ],
       false,
     ),
@@ -454,3 +460,37 @@ export const demoArticles: Article[] = [
     ),
   },
 ];
+
+const delmiFeature = demoArticles.find(
+  (article) =>
+    article.id === "delmi-training-institute-low-voltage-technicians",
+);
+const websiteBlock = delmiFeature?.body.find((block) =>
+  block.children.some((span) =>
+    String(span.text).startsWith("Visit Delmi Training Institute’s website"),
+  ),
+);
+if (websiteBlock) {
+  websiteBlock.markDefs = [
+    {
+      _key: "delmi-website",
+      _type: "link",
+      href: "https://www.delmitraining.com/",
+    },
+  ];
+  websiteBlock.children = [
+    { _key: "visit", _type: "span", text: "Visit ", marks: [] },
+    {
+      _key: "website",
+      _type: "span",
+      text: "Delmi Training Institute’s website",
+      marks: ["delmi-website"],
+    },
+    {
+      _key: "details",
+      _type: "span",
+      text: " to explore its courses and training opportunities.",
+      marks: [],
+    },
+  ];
+}
