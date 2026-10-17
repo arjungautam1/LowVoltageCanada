@@ -55,7 +55,7 @@ export const demoArticles: Article[] = [
     title:
       "Inside Delmi Training Institute: hands-on learning for Canada’s low-voltage workforce",
     excerpt:
-      "From patch panels to working doors, Delmi brings the equipment into the classroom to help learners connect theory with installation.",
+      "In Woodbridge, Ontario, Delmi is helping prepare Canada’s next generation of network cabling and electronic security professionals through hands-on training.",
     kind: "Companies",
     topic: "Security",
     image: "/images/delmi-training-class.jpg",
@@ -63,60 +63,68 @@ export const demoArticles: Article[] = [
       "Delmi Training Institute students and instructors gathered around security equipment in the classroom",
     author: "LVC Editorial",
     publishedAt: "2026-10-12T15:00:00.000Z",
-    readTime: 4,
+    updatedAt: "2026-10-17T14:21:30.191Z",
+    readTime: 5,
     featured: true,
     province: "Ontario",
     isDemo: false,
     body: storyBody(
-      "In Delmi Training Institute’s classroom, a door is more than a diagram. Learners have miniature door assemblies, wired panels, cameras, and electronics boards in front of them. They can make a connection, observe the result, and work back through the circuit when something goes wrong. That practical connection between understanding a system and installing it is the focus of this company highlight.",
+      "Delmi Training Institute was created to help close the skills gap and empower the next generation of network cabling and electronic security professionals in Canada. Located in Woodbridge, Ontario, the institute brings practical training into a classroom equipped with the systems learners will encounter in the field. Its focus is on helping people understand how those systems work, develop installation skills, and build confidence through hands-on practice.",
       [
         {
           heading: "Learning the system from the cable up",
           paragraphs: [
-            "In its article Closing the Skills Gap, Delmi describes a need for practical training across cabling and electronic security, including for workers updating their knowledge and sales staff seeking a better technical understanding. Its response is a set of focused, equipment-based courses.",
-            "The learning path begins with cabling. Patch-panel terminations give students a concrete starting point before they move into CCTV, electronics and relays, and access control. It is an approach that connects individual tasks to the installation around them: the cable serves the device, the device depends on power, and both must work with the rest of the system.",
+            "Low-voltage work connects several disciplines. A camera needs a reliable network connection. A controlled door depends on its reader, panel, locking hardware, and power supply working together. Behind each device is a cable, a circuit, and a sequence of operation that a technician needs to understand.",
+            "Delmi’s learning path follows those connections, beginning with network cabling before moving into CCTV, electronics and relays, and access control. Safety runs alongside the technical work. The aim is to give learners a foundation they can carry from one installation to the next, rather than familiarity with a single piece of equipment.",
           ],
         },
         {
-          heading: "Making relay logic visible",
+          heading: "Network cabling: building the foundation",
           paragraphs: [
-            "Delmi’s custom electronics board brings together Altronix relays, a Camden CX-12 Plus door interface relay, a touchless activation sensor, a pull station, and other door-control components. Rather than treating each part as a separate product, the board gives learners a way to follow what happens when an input changes and a relay switches.",
-            "Camden’s CX-12 Plus supports door-system interconnection and sequencing with adjustable delays. In the classroom, that provides a useful example of why an installation needs more than correct connections: the sequence of operation matters too.",
-            "The institute’s miniature doors carry the lesson into a working assembly. Students can see how the panel, reader, lock, and associated devices interact, then revisit the wiring and settings as they practise.",
+            "Network cabling is the physical foundation that connects devices to the wider system. Patch panels provide an organised termination point for cable runs, while outlets and patch cords complete connections to equipment. The quality of those connections matters before a camera can send video or a networked access panel can communicate.",
+            "At Delmi, patch-panel termination gives learners a practical starting point. Working directly with the cable helps connect the classroom explanation to the finished connection. It also establishes a habit that carries through the other subjects: understand the path between devices before looking only at the device itself.",
           ],
         },
         {
-          heading: "Experience across cameras and access panels",
+          heading: "CCTV: understanding the camera and the system",
           paragraphs: [
-            "According to the classroom details supplied for this feature, Delmi uses 14 different cameras in its training, including Dahua, Avigilon, Axis, and Hikvision. Handling different devices gives students opportunities to compare their construction and configuration instead of becoming familiar with only one interface.",
-            "Access-control training similarly spans CDVI, Kantech, and RBH panel platforms, which are listed in Delmi’s Access Control Technician curriculum. The miniature doors and panels make this a practical comparison: learners can work through similar functions on different systems and see where the setup changes.",
+            "CCTV brings cameras, network connections, power, and recording equipment together. Each component has a role: the camera captures the scene, the connection carries the video, and the recording system makes that footage available for review. Understanding the complete chain helps learners see why a working camera alone does not make a working surveillance system.",
+            "Delmi’s classroom includes 14 different cameras, with equipment from Dahua, Avigilon, Axis, and Hikvision. That variety gives learners exposure to different devices and interfaces. It creates opportunities to compare equipment and connect its physical construction with the way it is set up and used.",
           ],
         },
         {
-          heading: "Connecting the classroom with the field",
+          heading: "Electronics and relays: making the logic visible",
           paragraphs: [
-            "Delmi’s published skills-gap article also describes a two-week field internship that extends learning into real installation environments. The institute presents this as a bridge between classroom exercises and work on site.",
-            "Guest sessions add another perspective. Manufacturers, integrators, and experienced practitioners are invited to discuss the work with students. For Roland, the institute’s president, bringing those voices into training is part of connecting the classroom with the industry learners hope to enter.",
+            "Electronics and relays explain what happens between an input and a response. A relay switches a circuit when it receives an activation signal, allowing one part of a system to influence another. Understanding that relationship helps technicians follow the sequence of operation instead of treating wiring as a set of disconnected terminals.",
+            "Delmi’s custom training board brings together Altronix relays, a Camden CX-12 Plus door interface relay, a touchless activation sensor, a pull station, and other door-control components. The board makes those relationships visible. Learners can follow a signal, observe a relay switching, and work back through the connections when the result differs from what they expected.",
+            "The value is in understanding why the circuit behaves as it does. A connection may be physically complete, but the devices still need to respond in the intended order. Practical exercises give that distinction a clear, observable result.",
           ],
         },
         {
-          heading: "Building skills with safety in mind",
+          heading: "Access control: bringing the door to life",
           paragraphs: [
-            "Delmi’s course catalogue includes Working at Heights and WHMIS alongside its technical subjects. Including safety in the training conversation reflects an essential part of installation work: technicians need to understand their work environment as well as the equipment they are handling.",
+            "Access control turns a decision about entry into a physical action at a door. A reader receives a credential, a controller applies the system’s permissions, and the locking hardware responds. Door contacts and exit devices provide further information and inputs. The installation depends on those components working together, rather than on any one device in isolation.",
+            "Delmi uses miniature door assemblies to bring that interaction into the classroom. Learners can see how the reader, panel, lock, and associated devices relate to one another, then revisit the wiring and settings as they practise. Training across CDVI, Kantech, and RBH panel platforms adds another dimension: similar functions can require different configuration steps on different systems.",
           ],
         },
         {
-          heading: "Preparing the next generation",
+          heading: "Safety: part of the work from the beginning",
           paragraphs: [
-            "The institute says it is developing additional networking and intercom training. While those plans take shape, the strongest illustration of its approach is already in the lab: real components, repeated practice, and room to ask why a system behaves the way it does.",
-            "For people entering low-voltage work, that is a useful foundation. For experienced workers returning to the classroom, it is a chance to revisit the fundamentals and explore equipment beyond their everyday installations. Delmi’s contribution is to give both groups a place to connect knowledge with practical work.",
+            "Technical skill belongs alongside an understanding of the work environment. Delmi’s training offering includes Working at Heights and WHMIS, bringing safety into the same conversation as cabling, cameras, and door systems.",
+            "Those subjects address different parts of preparation for the job. Working at Heights focuses on hazards associated with elevated work, while WHMIS covers workplace hazardous-product information and communication. Together, they reinforce that a technician’s responsibilities extend beyond getting equipment to operate.",
           ],
         },
         {
-          heading: "About this feature",
+          heading: "Connecting training with the industry",
           paragraphs: [
-            "Read Delmi’s original article Closing the Skills Gap for its perspective on training needs, or explore the full course catalogue for current programs.",
-            "Disclosure: Low Voltage Canada’s founder works with Delmi Training Institute. This feature draws on Delmi’s published course information and supplied classroom details and photographs.",
+            "The classroom is one part of the journey. Delmi also describes a two-week field internship that extends learning into installation environments. Guest sessions with manufacturers, integrators, and experienced practitioners add perspectives from the people working with these systems every day.",
+            "For people entering the industry, the opportunity is to build a foundation across connected disciplines. For experienced workers returning to training, it is a chance to revisit fundamentals and explore equipment beyond their usual installations. From its Woodbridge classroom, Delmi is working towards the same purpose: helping Canada’s next generation of network cabling and electronic security professionals connect knowledge with practical skill.",
+          ],
+        },
+        {
+          heading: "Disclosure",
+          paragraphs: [
+            "Low Voltage Canada’s founder works with Delmi Training Institute. Classroom details and photographs were supplied for this feature.",
           ],
         },
       ],
@@ -452,62 +460,3 @@ export const demoArticles: Article[] = [
     ),
   },
 ];
-
-const delmiLinks: Record<string, string> = {
-  "Closing the Skills Gap":
-    "https://www.delmitraining.com/post/closing-the-skills-gap-in-canada-s-cabling-and-electronic-security-industry",
-  "Camden CX-12 Plus door interface relay":
-    "https://www.camdencontrols.com/products/CX_12Plus_Door_Interface_Relay",
-  "Network Cabling Specialist course":
-    "https://www.delmitraining.com/ourcourses/network-cabling-specialist",
-  "CCTV Surveillance Technician course":
-    "https://www.delmitraining.com/ourcourses/cctv-surveillance-technician",
-  "Electronics and Relays course":
-    "https://www.delmitraining.com/ourcourses/electronics-and-relays",
-  "Access Control Technician curriculum":
-    "https://www.delmitraining.com/ourcourses/access-control-technician",
-  "full course catalogue": "https://www.delmitraining.com/ourcourses",
-  "CDVI’s Learning Zone": "https://www.cdvi.ca/learning-zone/",
-  "access-control video tutorials": "https://www.cdvi.ca/our-tutorials/",
-  "About Us page": "https://www.delmitraining.com/aboutus",
-};
-
-// Store inline links as Portable Text annotations so Studio and the site agree.
-const delmiArticle = demoArticles.find(
-  (article) =>
-    article.id === "delmi-training-institute-low-voltage-technicians",
-);
-if (delmiArticle) {
-  for (const block of delmiArticle.body) {
-    for (const [label, href] of Object.entries(delmiLinks)) {
-      const spanIndex = block.children.findIndex(
-        (span) => typeof span.text === "string" && span.text.includes(label),
-      );
-      if (spanIndex < 0) continue;
-      const span = block.children[spanIndex];
-      const text = String(span.text);
-      const offset = text.indexOf(label);
-      const key = `${block._key}-link-${block.markDefs?.length ?? 0}`;
-      block.markDefs = [
-        ...(block.markDefs ?? []),
-        { _type: "link", _key: key, href },
-      ];
-      block.children.splice(
-        spanIndex,
-        1,
-        { ...span, _key: `${key}-before`, text: text.slice(0, offset) },
-        {
-          ...span,
-          _key: `${key}-label`,
-          text: label,
-          marks: [...(span.marks ?? []), key],
-        },
-        {
-          ...span,
-          _key: `${key}-after`,
-          text: text.slice(offset + label.length),
-        },
-      );
-    }
-  }
-}
