@@ -1,3 +1,4 @@
+import { AiAssistant } from "@/components/ai-assistant";
 import { Search } from "lucide-react";
 import { getArticles } from "@/sanity/lib/queries";
 import { StoryCard } from "@/components/story-card";
@@ -51,6 +52,7 @@ export default async function SearchPage({
           </button>
         </div>
       </form>
+      <AiAssistant inline initialQuestion={query} />
       <div className="results-label">
         {query
           ? `${articles.length} ${articles.length === 1 ? "RESULT" : "RESULTS"} FOR “${query}”`

@@ -86,3 +86,11 @@ change `RESEND_FROM_EMAIL` to an address on the verified domain and redeploy.
 The visitor's email is used for Reply-To; the recipient is controlled on the server.
 
 Run `npm run test:email` for simulated request, validation, and timeout checks.
+
+## AI reading assistant
+
+The site includes an OpenAI-powered reading assistant, question-based story discovery on search, and summaries and Q&A on individual stories. Set `OPENAI_API_KEY` in `.env.local` and in your hosting environment; optionally set `OPENAI_MODEL` (default: `gpt-4.1-mini`). Restart the server after configuration changes. The key stays on the server. Without a key, the assistant displays an availability message and links to standard search.
+
+The `/api/assistant` endpoint uses the OpenAI Responses API with `store: false`, a 25-second timeout, bounded question/context/output sizes, and same-origin checks. General questions use up to 60 published article excerpts; story questions use the article body. Returned links are created from the site's own catalog. It has an in-memory limit of eight requests per minute per IP; this limit is per server instance. For public production traffic, enforce shared rate limits and a spending budget through your hosting provider and OpenAI project. Questions and public editorial context are sent to OpenAI; do not enter private information. The assistant cannot browse live news.
+
+API documentation: https://developers.openai.com/api/docs/guides/text

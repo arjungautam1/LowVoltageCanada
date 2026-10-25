@@ -139,10 +139,13 @@ export async function getArticles(): Promise<Article[]> {
     {},
     fetchOptions,
   );
-  return [
-    ...localEditorialArticles.map((article) => ({ ...article, body: [] })),
-    ...articles.map(normalizeArticle),
-  ];
+  const sanityArticles = articles.map(normalizeArticle);
+  const sanitySlugs = new Set(sanityArticles.map((a) => a.slug));
+  const missingLocal = localEditorialArticles
+    .filter((article) => !sanitySlugs.has(article.slug))
+    .map((article) => ({ ...article, body: [] }));
+
+  return [...sanityArticles, ...missingLocal];
 }
 
 export const getArticle = cache(

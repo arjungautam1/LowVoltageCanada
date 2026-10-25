@@ -1,0 +1,249 @@
+.desk {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  border: 1px solid var(--line);
+  margin: 32px 0 52px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.brief {
+  background: #192c29;
+  color: #f5f8f3;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+}
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: #b7d5c5;
+}
+.brief h2 {
+  font-size: 2rem;
+  line-height: 1.18;
+  letter-spacing: -0.045em;
+  margin: 24px 0 16px;
+}
+.brief h2 span {
+  color: #c5ddbe;
+}
+.brief > p {
+  font-size: 0.9rem;
+  color: #c5d1ca;
+  line-height: 1.7;
+}
+.briefStat {
+  border-top: 1px solid #ffffff26;
+  padding-top: 24px;
+  margin: 28px 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.briefStat > span {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+.briefStat > div {
+  font-size: 0.85rem;
+}
+.briefStat small {
+  color: #aebfb5;
+  font-size: 0.7rem;
+}
+.aiLink {
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid #ffffff35;
+  padding: 14px 12px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+.aiLink > span {
+  flex: 1;
+}
+.aiLink small {
+  display: block;
+  color: #adc2b5;
+  font-size: 0.66rem;
+  margin-top: 4px;
+}
+.brief .privacy {
+  font-size: 0.68rem;
+  margin-top: 15px;
+}
+.feed {
+  background: #fff;
+  padding: 26px 30px 16px;
+}
+.feedHeading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+}
+.feedHeading > a {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 19px 0 8px;
+}
+.filters button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 6px 10px;
+  font-size: 0.72rem;
+}
+.filters button[aria-pressed="true"] {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.filters button > span {
+  opacity: 0.7;
+}
+.row {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) 34px;
+  gap: 12px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+.number {
+  font-size: 0.8rem;
+  font-family: var(--font-display);
+  color: var(--red);
+  font-weight: 700;
+  padding-top: 24px;
+}
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+.meta > span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.meta > span:first-child {
+  color: var(--red);
+  font-weight: 600;
+}
+.row h3 {
+  font-size: 1rem;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  margin: 7px 0;
+}
+.row h3 a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.row p {
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+.save {
+  height: 34px;
+  width: 34px;
+  border: 1px solid var(--line);
+  background: transparent;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin-top: 20px;
+}
+.save[aria-pressed="true"] {
+  background: #e7eee5;
+  color: #254d36;
+  border-color: #bdcfb8;
+}
+.status {
+  font-size: 0.68rem;
+  color: var(--muted);
+  padding-top: 12px;
+  min-height: 32px;
+}
+.empty {
+  text-align: center;
+  padding: 44px 20px;
+  color: var(--muted);
+}
+.empty h3 {
+  color: var(--ink);
+  font-size: 1.1rem;
+  margin: 12px 0 7px;
+}
+.empty p {
+  font-size: 0.85rem;
+}
+.empty button {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  border: 0;
+  color: var(--red);
+  background: none;
+  padding: 14px;
+  margin-top: 9px;
+  font-size: 0.8rem;
+}
+.desk :is(a, button):focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 4px;
+}
+@media (max-width: 1000px) {
+  .desk {
+    grid-template-columns: 270px minmax(0, 1fr);
+  }
+  .brief {
+    padding: 25px;
+  }
+  .feed {
+    padding: 24px 20px 16px;
+  }
+}
+@media (max-width: 760px) {
+  .desk {
+    grid-template-columns: 1fr;
+  }
+  .brief h2 {
+    margin-top: 16px;
+  }
+  .briefStat {
+    margin: 20px 0;
+    padding-top: 20px;
+  }
+  .feedHeading {
+    align-items: flex-start;
+  }
+  .feedHeading .eyebrow {
+    font-size: 0.65rem;
+  }
+  .row {
+    gap: 8px;
+  }
+}

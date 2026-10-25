@@ -1,3 +1,4 @@
+import { SignalDesk } from "@/components/signal-desk";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -208,6 +209,29 @@ export default async function HomePage() {
             ))}
           </div>
         </div>
+        <SignalDesk
+          articles={articles.map(
+            ({
+              id,
+              slug,
+              title,
+              excerpt,
+              topic,
+              readTime,
+              publishedAt,
+              isDemo,
+            }) => ({
+              id,
+              slug,
+              title,
+              excerpt,
+              topic,
+              readTime,
+              publishedAt,
+              isDemo,
+            }),
+          )}
+        />
         {latest.length > 0 && (
           <section className="latest-section">
             <SectionHeading

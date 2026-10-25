@@ -1,3 +1,4 @@
+import { AiAssistant } from "@/components/ai-assistant";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -239,6 +240,7 @@ export default async function ArticlePage({
             </aside>
           )}
           <div className="article-body">
+            <AiAssistant inline slug={article.slug} />
             <PortableText
               value={article.body}
               components={{
