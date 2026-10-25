@@ -1,4 +1,3 @@
-import { AiAssistant } from "@/components/ai-assistant";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
@@ -12,7 +11,6 @@ export default function SiteLayout({
       <SiteHeader />
       {children}
       <SiteFooter />
-      <AiAssistant />
     </>
   );
 }

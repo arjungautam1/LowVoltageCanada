@@ -240,7 +240,6 @@ export default async function ArticlePage({
             </aside>
           )}
           <div className="article-body">
-            <AiAssistant inline slug={article.slug} />
             <PortableText
               value={article.body}
               components={{
@@ -265,6 +264,7 @@ export default async function ArticlePage({
             <span className="end-mark" /> A CANADIAN PERSPECTIVE. A CONNECTED
             INDUSTRY.
           </div>
+          <AiAssistant inline slug={article.slug} />
         </div>
       </article>
       {related.length > 0 && (
